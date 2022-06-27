@@ -121,8 +121,8 @@ class _TeamScreenState extends State<TeamScreen> {
                                 )),
                                 SizedBox(height: 20,),
                                 tabbedIndex == index ? Text("joined at ${new DateTime.now()} ",style:isPresent == true ? TextStyle(fontSize: 25,
-                                 color:  Colors.green) :TextStyle(fontSize: 25,
-                                    color:  Colors.red)
+                                 color:  Colors.green) :TextStyle(fontSize: 12,
+                                    color:  Colors.white)
                                 ) :
                                 Row(
                                   children: [
@@ -134,22 +134,27 @@ class _TeamScreenState extends State<TeamScreen> {
                                           borderRadius: BorderRadius.circular(5)),
                                       child: Center(
                                         child: StreamBuilder<Object>(
-                                          stream: manager.isRollCallTapped$,
+                                          stream: manager.isRollCallTapped$.asStream(),
                                           builder: (context, snapshot) {
+                                           // manager.inLogType.add("leave this");
+                                            print("data ? ${snapshot.hasData}");
+                                            print("data value ? ${snapshot.data.toString()}");
+                                            print("error ? ${snapshot.hasError}");
 
-                                            if(snapshot.hasError) {
-
-                                            }
-                                            return TextButton(
+                                            return snapshot.hasData ? TextButton(
                                               onPressed: () {
                                                 tabbedIndex = index;
                                                 isPresent =  false;
-                                                manager.inLogType.add(
-                                                    "Expense_ADDED");
-                                                manager.isReallyTapped$.listen((
-                                                    event) async {
-                                                  print("actually tapped");
-                                                });
+                                                if(snapshot.hasData) {
+                                                  manager.inLogType.add(
+                                                      "Expense_ADDED");
+                                                  manager.isReallyTapped$
+                                                      .listen((event) async {
+                                                    print("actually tapped");
+                                                  });
+                                                }else{
+                                                  print("you are late and now allowed now to enter team member Roll Call");
+                                                }
                                                 setState(() {
 
                                                 });
@@ -159,7 +164,7 @@ class _TeamScreenState extends State<TeamScreen> {
                                                 "Absent",
                                                 style: TextStyle(color: Colors.black),
                                               ),
-                                            );
+                                            ) : Text("NOT ALLOWED");
                                           }
                                         ),
                                       ),
