@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:proof_tech_app/AppLayer/Overseer.dart';
+import 'package:proof_tech_app/logs/LogsManager.dart';
+
+import '../../AppLayer/Provider.dart';
 
 class TeamScreen extends StatefulWidget {
   const TeamScreen({Key? key}) : super(key: key);
@@ -13,6 +17,8 @@ class _TeamScreenState extends State<TeamScreen> {
   bool isPresent = false;
   @override
   Widget build(BuildContext context) {
+    LogsManager manager = Provider.of(context).fetch(LogsManager);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -58,7 +64,7 @@ class _TeamScreenState extends State<TeamScreen> {
       body: Container(
         width: double.infinity,
         child: ListView.builder(
-            itemCount: 5,
+            itemCount: Overseer.myteamList.length,
             itemBuilder: (context, index) {
               return Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -74,7 +80,8 @@ class _TeamScreenState extends State<TeamScreen> {
                             height: Get.height * .18,
                             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color:  Overseer.myteamList[index].roleId.contains("4") ? Colors.deepOrangeAccent
+                              : Colors.white,
 
                         ),
                         child: Row(
@@ -86,6 +93,7 @@ class _TeamScreenState extends State<TeamScreen> {
                               child: Container(
                                 height: 70,
                                 width: 70,
+                               // color:Colors.green  ,
                                 decoration: BoxDecoration(
 
                                     borderRadius: BorderRadius.circular(10),
@@ -101,18 +109,18 @@ class _TeamScreenState extends State<TeamScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Tahir Mehmood", style: TextStyle(
+                                Text(Overseer.myteamList[index].fName +" " +Overseer.myteamList[index].lName , style: TextStyle(
                                   fontFamily: 'poppins',
                                   fontWeight: FontWeight.w900,
                                   letterSpacing: 1
                                 ),),
-                                Text("Worker", style: TextStyle(
+                                Text(Overseer.myteamList[index].roleId.contains("5") ?" ${Overseer.myteamList[index].roleId} - Worker" : "${Overseer.myteamList[index].roleId} -- SuperVisor", style: TextStyle(
                                     fontFamily: 'poppins',
 
                                     letterSpacing: 1
                                 )),
                                 SizedBox(height: 20,),
-                                tabbedIndex == index ? Text("joined at 9:00 AM",style:isPresent == true ? TextStyle(fontSize: 25,
+                                tabbedIndex == index ? Text("joined at ${new DateTime.now()} ",style:isPresent == true ? TextStyle(fontSize: 25,
                                  color:  Colors.green) :TextStyle(fontSize: 25,
                                     color:  Colors.red)
                                 ) :
@@ -125,19 +133,34 @@ class _TeamScreenState extends State<TeamScreen> {
                                           color: Colors.red,
                                           borderRadius: BorderRadius.circular(5)),
                                       child: Center(
-                                        child: TextButton(
-                                          onPressed: () {
-                                            tabbedIndex = index;
-                                            isPresent =  false;
-                                            setState(() {
+                                        child: StreamBuilder<Object>(
+                                          stream: manager.isRollCallTapped$,
+                                          builder: (context, snapshot) {
 
-                                            });
-                                           //  Get.back();
-                                          },
-                                          child: Text(
-                                            "Absent",
-                                            style: TextStyle(color: Colors.black),
-                                          ),
+                                            if(snapshot.hasError) {
+
+                                            }
+                                            return TextButton(
+                                              onPressed: () {
+                                                tabbedIndex = index;
+                                                isPresent =  false;
+                                                manager.inLogType.add(
+                                                    "Expense_ADDED");
+                                                manager.isReallyTapped$.listen((
+                                                    event) async {
+                                                  print("actually tapped");
+                                                });
+                                                setState(() {
+
+                                                });
+                                               //  Get.back();
+                                              },
+                                              child: Text(
+                                                "Absent",
+                                                style: TextStyle(color: Colors.black),
+                                              ),
+                                            );
+                                          }
                                         ),
                                       ),
                                     ),

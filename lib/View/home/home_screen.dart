@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Container(
                         height: Get.height * 0.050,
-                        width: Get.width * 0.25,
+                        width: Get.width * 0.45,
                         decoration: BoxDecoration(
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(15)),
@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Get.to(ProjectScreen());
                             },
                             child: Text(
-                              "Project A",
+                              Overseer.projectName,
                               style: TextStyle(color: Colors.black),
                             ),
                           ),

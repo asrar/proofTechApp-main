@@ -1,5 +1,8 @@
 import 'package:proof_tech_app/Login/UserManager.dart';
 
+import '../Login/LoginModel.dart';
+import '../logs/LogsManager.dart';
+
 
 
 
@@ -12,6 +15,13 @@ class Overseer {
   static int age = 0;
   ///// app level dataset
   static String usname = "";
+  static String supervisorName = "";
+  static int supervisorId = 0;
+  static String projectName = "";
+  static Team myteam = new Team(id: 1, fName: "", lName: "", phone: "",
+      email: "", image: "", password: "=", rememberToken: "rememberToken", createdAt: "createdAt",
+      updatedAt: "updatedAt", roleId: "", zoneId: "zoneId", authToken: "authToken", memberAddingTime: "memberAddingTime");
+  static List<Team> myteamList  = new List.empty();
 
 
   //////
@@ -52,7 +62,7 @@ class Overseer {
   Overseer() {
 // register managers
     register(UserManager, UserManager());
-
+    register(LogsManager, LogsManager());
   }
 
   static printWrapped(String text) {

@@ -1,23 +1,24 @@
 class LoginModel {
   LoginModel({
     required this.token,
-    required this.zoneWiseTopic,
+    required this.logsKey,
     required this.data,
   });
   late final String token;
-  late final String zoneWiseTopic;
+  late final List<String> logsKey;
   late final Data data;
 
   LoginModel.fromJson(Map<String, dynamic> json){
+    print("parsing starts here ...");
     token = json['token'];
-    zoneWiseTopic = json['zone_wise_topic'];
+    logsKey = List.castFrom<dynamic, String>(json['logs_key']);
     data = Data.fromJson(json['data']);
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['token'] = token;
-    _data['zone_wise_topic'] = zoneWiseTopic;
+    _data['logs_key'] = logsKey;
     _data['data'] = data.toJson();
     return _data;
   }
@@ -47,17 +48,16 @@ class Data {
   late final String email;
   late final String image;
   late final String password;
-  late final String rememberToken;
+  late final String? rememberToken;
   late final String createdAt;
   late final String updatedAt;
   late final String roleId;
-  late final int zoneId;
+  late final String? zoneId;
   late final String authToken;
   late final List<Projects> Projects1;
 
   Data.fromJson(Map<String, dynamic> json){
-
-    print("my print 00 ");
+    print("parsing data now");
     id = json['id'];
     fName = json['f_name'];
     lName = json['l_name'];
@@ -65,15 +65,13 @@ class Data {
     email = json['email'];
     image = json['image'];
     password = json['password'];
-    rememberToken = "";
-    print("my print 11 ");
+
+    rememberToken = json['remember_token'];;
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     roleId = json['role_id'];
-    zoneId = 0;
-    print("my print 22 ");
+    zoneId = json['zone_id'];
     authToken = json['auth_token'];
-    print("my print 33 ");
     Projects1 = List.from(json['Projects']).map((e)=>Projects.fromJson(e)).toList();
   }
 
@@ -124,7 +122,6 @@ class Projects {
   late final Type type;
 
   Projects.fromJson(Map<String, dynamic> json){
-    print("inside projects 0 ");
     id = json['id'];
     projectTypeId = json['project_type_id'];
     name = json['name'];
@@ -170,12 +167,13 @@ class Material {
   late final List<Stock> stock;
 
   Material.fromJson(Map<String, dynamic> json){
-    print("inside material ");
+    print("Starting material parsing ");
     id = json['id'];
     name = json['name'];
     projectId = json['project_id'];
     unitTitle = json['unit_title'];
     stock = List.from(json['stock']).map((e)=>Stock.fromJson(e)).toList();
+    print("ending Material parsing ");
   }
 
   Map<String, dynamic> toJson() {
@@ -194,7 +192,11 @@ class Stock {
     required this.id,
     required this.materialsId,
     required this.projectId,
+    required this.receivedFrom,
+    required this.receivedTo,
     required this.quantity,
+    required this.packageQuantity,
+    required this.unitPackageId,
     required this.unit,
     required this.notes,
     required this.createdAt,
@@ -203,43 +205,63 @@ class Stock {
   late final int id;
   late final String materialsId;
   late final String projectId;
+  late final String receivedFrom;
+  late final String receivedTo;
   late final String quantity;
-  late final String unit;
+  late final String packageQuantity;
+  late final String unitPackageId;
+  late final String? unit;
   late final String notes;
   late final String createdAt;
   late final String updatedAt;
 
   Stock.fromJson(Map<String, dynamic> json){
-    print("inside stock >");
+    print("Starting Stock parsing ");
     id = json['id'];
-    print("inside stock > 0 -0 A ");
-    if(json['materials_id']!=null) {
+    if(json['materials_id'] != null ) {
       materialsId = json['materials_id'];
-      print("inside stock > 0 -1 $materialsId");
-    }else{
-    if(json['tools_id'] != null) {
+    }else if(json['tools_id'] != null){
       materialsId = json['tools_id'];
     }
-
-    }
+    print("-- before quantity 11");
     projectId = json['project_id'];
-    print("inside stock > 0-9  $projectId");
+    if(json['received_from']!=null) {
+      receivedFrom = json['received_from'];
+    }
+    if(json['received_to']!=null) {
+      receivedTo = json['received_to'];
+    }
+
+
     quantity = json['quantity'];
-    print("inside stock > 0-8 $quantity");
-    unit = "null";
-    print("inside stock > 1");
+    print("-- before quantity");
+    if(json['package_quantity']!=null) {
+      packageQuantity = json['package_quantity'];
+    }
+    if(json['unit_package_id']!=null) {
+      unitPackageId = json['unit_package_id'];
+    }
+
+
+    print("before unit - inside stock");
+    unit = json['unit'];
     notes = json['notes'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    print("-- isdide unit closing ");
+    print("End Stock parsing ");
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['id'] = id;
+
     _data['materials_id'] = materialsId;
     _data['project_id'] = projectId;
+    _data['received_from'] = receivedFrom;
+    _data['received_to'] = receivedTo;
     _data['quantity'] = quantity;
+    _data['package_quantity'] = packageQuantity;
+    _data['unit_package_id'] = unitPackageId;
     _data['unit'] = unit;
     _data['notes'] = notes;
     _data['created_at'] = createdAt;
@@ -263,14 +285,13 @@ class Tools {
   late final List<Stock> stock;
 
   Tools.fromJson(Map<String, dynamic> json){
-    print("insdide tools");
+    print("Starting tools parsing ");
     id = json['id'];
     name = json['name'];
     projectId = json['project_id'];
     unitTitle = json['unit_title'];
-    print("before stock");
     stock = List.from(json['stock']).map((e)=>Stock.fromJson(e)).toList();
-    print(" after stock call end");
+    print("ending tools parsing ");
   }
 
   Map<String, dynamic> toJson() {
@@ -298,7 +319,7 @@ class Team {
     required this.updatedAt,
     required this.roleId,
     required this.zoneId,
-    this.authToken,
+    required this.authToken,
     required this.memberAddingTime,
   });
   late final int id;
@@ -308,35 +329,37 @@ class Team {
   late final String email;
   late final String image;
   late final String password;
-  late final String rememberToken;
+  late final String? rememberToken;
   late final String createdAt;
   late final String updatedAt;
   late final String roleId;
-  late final int zoneId;
+  late final String? zoneId;
   late final String? authToken;
   late final String memberAddingTime;
 
   Team.fromJson(Map<String, dynamic> json){
-    print("inside team");
+    print("--starting team parsing ");
     id = json['id'];
     fName = json['f_name'];
     lName = json['l_name'];
     phone = json['phone'];
     email = json['email'];
     image = json['image'];
+    print("--mid team parsing ");
     password = json['password'];
-    rememberToken = "";
+    rememberToken = json['remember_token'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     roleId = json['role_id'];
-    zoneId = 0;
-    authToken = "";
+    zoneId = json['zone_id'];
+    authToken = json['auth_token'];
     memberAddingTime = json['member_adding_time'];
+
+    print("--ending team parsing ");
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    print("-- print 0");
     _data['id'] = id;
     _data['f_name'] = fName;
     _data['l_name'] = lName;
@@ -374,17 +397,17 @@ class Type {
   late final List<String> myActivities;
 
   Type.fromJson(Map<String, dynamic> json){
-    print("inside type");
+
+    print("Starting Type parsing ");
     id = json['id'];
     name = json['name'];
-    print("inside type $name" );
     activities = List.castFrom<dynamic, String>(json['activities']);
-    print("inside type $activities" );
     status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    print("done type");
     myActivities = List.castFrom<dynamic, String>(json['myActivities']);
+
+    print("ENding Type parsing ");
   }
 
   Map<String, dynamic> toJson() {

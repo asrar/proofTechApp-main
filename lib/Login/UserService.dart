@@ -81,6 +81,10 @@ class UserService {
           Overseer.userId = _userList[0].data.id;
           print("Over seer User ID ${Overseer.userId} Sign In User ID ${_userList[0].data.Projects1.length}");
           Overseer.userName = _userList[0].data.fName  +" "+ _userList[0].data.lName;
+          Overseer.supervisorName = _userList[0].data.fName  +" "+ _userList[0].data.lName;
+          Overseer.supervisorId = _userList[0].data.id;
+          Overseer.projectName = _userList[0].data.Projects1[0].name;
+          Overseer.myteamList = _userList[0].data.Projects1[0].team;
           print("login status from service else  ${_userList[0].data.fName}  ${_userList[0].data.lName}  "
               "by ${_userList[0].data.Projects1[0].team[1].fName }");
         }
