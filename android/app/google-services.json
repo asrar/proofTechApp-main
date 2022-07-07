@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "947298372691",
+    "firebase_url": "https://salva-fast-food-default-rtdb.firebaseio.com",
+    "project_id": "salva-fast-food",
+    "storage_bucket": "salva-fast-food.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947298372691:android:e9607824d5218e35d8caa6",
+        "android_client_info": {
+          "package_name": "salva.fastfood.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "947298372691-2maogdn8llaqmgoeasdhlgpkvinkcpsk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "salva.fastfood.customer",
+            "certificate_hash": "bdf9afe9020afd2cd27559f51e6b9e68022935ee"
+          }
+        },
+        {
+          "client_id": "947298372691-0kmj6901elpgcv7563kcunk1v7bkn0du.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUtM2TX3jgWwxImnMot76w319Qg4qMJuw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "947298372691-0kmj6901elpgcv7563kcunk1v7bkn0du.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947298372691:android:674f9a2509da22b1d8caa6",
+        "android_client_info": {
+          "package_name": "salva.fastfood.driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "947298372691-0kmj6901elpgcv7563kcunk1v7bkn0du.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUtM2TX3jgWwxImnMot76w319Qg4qMJuw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "947298372691-0kmj6901elpgcv7563kcunk1v7bkn0du.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947298372691:android:330498e25add597cd8caa6",
+        "android_client_info": {
+          "package_name": "salva.fastfood.restaurant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "947298372691-0kmj6901elpgcv7563kcunk1v7bkn0du.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUtM2TX3jgWwxImnMot76w319Qg4qMJuw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "947298372691-0kmj6901elpgcv7563kcunk1v7bkn0du.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proof_tech_app/model/project_model.dart';
 
+import '../../AppLayer/Overseer.dart';
+
 class ProjectScreen extends StatefulWidget {
   const ProjectScreen({Key? key}) : super(key: key);
 
@@ -58,7 +60,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
                   child: ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: dummyProjectList.length,
+                      itemCount: Overseer.myProjects.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
@@ -88,15 +90,17 @@ class _ProjectScreenState extends State<ProjectScreen> {
                                       horizontal: 10, vertical: 10),
                                   child: projectContainer(
                                       titleTxt:
-                                          dummyProjectList[index].titleText,
+                                      Overseer.myProjects[index].name,
                                       sbTitleTxt:
-                                          dummyProjectList[index].sbTitleText)),
+                                      Overseer.myProjects[index].description)),
                             ),
                           ),
                         );
                       })),
               InkWell(
                   onTap: () {
+                    Overseer.projectName = Overseer.myProjects[selected_index].name;
+                    Overseer.project = Overseer.myProjects[selected_index];
                     Navigator.pop(context);
                   },
                   child: Align(

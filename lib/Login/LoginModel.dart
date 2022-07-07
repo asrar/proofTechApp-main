@@ -1,23 +1,22 @@
 class LoginModel {
   LoginModel({
-    required this.token,
+
     required this.logsKey,
     required this.data,
   });
-  late final String token;
+
   late final List<String> logsKey;
   late final Data data;
 
   LoginModel.fromJson(Map<String, dynamic> json){
-    print("parsing starts here ...");
-    token = json['token'];
+
     logsKey = List.castFrom<dynamic, String>(json['logs_key']);
     data = Data.fromJson(json['data']);
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['token'] = token;
+
     _data['logs_key'] = logsKey;
     _data['data'] = data.toJson();
     return _data;
@@ -108,6 +107,9 @@ class Projects {
     required this.tools,
     required this.team,
     required this.type,
+    required this.expenses1,
+    required this.actions1,
+
   });
   late final int id;
   late final String projectTypeId;
@@ -116,10 +118,12 @@ class Projects {
   late final String status;
   late final String createdAt;
   late final String updatedAt;
-  late final List<Material> material;
+  late final List<Materials> material;
   late final List<Tools> tools;
   late final List<Team> team;
   late final Type type;
+  late final List<Expenses1> expenses1;
+  late final List<Actions1> actions1;
 
   Projects.fromJson(Map<String, dynamic> json){
     id = json['id'];
@@ -129,9 +133,11 @@ class Projects {
     status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    material = List.from(json['material']).map((e)=>Material.fromJson(e)).toList();
+    material = List.from(json['material']).map((e)=>Materials.fromJson(e)).toList();
     tools = List.from(json['tools']).map((e)=>Tools.fromJson(e)).toList();
     team = List.from(json['team']).map((e)=>Team.fromJson(e)).toList();
+    expenses1 = List.from(json['expenses1']).map((e)=>Expenses1.fromJson(e)).toList();
+    actions1 = List.from(json['actions1']).map((e)=>Actions1.fromJson(e)).toList();
     type = Type.fromJson(json['type']);
   }
 
@@ -147,13 +153,15 @@ class Projects {
     _data['material'] = material.map((e)=>e.toJson()).toList();
     _data['tools'] = tools.map((e)=>e.toJson()).toList();
     _data['team'] = team.map((e)=>e.toJson()).toList();
+    _data['expenses1'] = expenses1.map((e)=>e.toJson()).toList();
+    _data['actions1'] = actions1.map((e)=>e.toJson()).toList();
     _data['type'] = type.toJson();
     return _data;
   }
 }
 
-class Material {
-  Material({
+class Materials {
+  Materials({
     required this.id,
     required this.name,
     required this.projectId,
@@ -166,14 +174,14 @@ class Material {
   late final String unitTitle;
   late final List<Stock> stock;
 
-  Material.fromJson(Map<String, dynamic> json){
+  Materials.fromJson(Map<String, dynamic> json){
     print("Starting material parsing ");
     id = json['id'];
     name = json['name'];
     projectId = json['project_id'];
     unitTitle = json['unit_title'];
     stock = List.from(json['stock']).map((e)=>Stock.fromJson(e)).toList();
-    print("ending Material parsing ");
+    print("ending Materials parsing ");
   }
 
   Map<String, dynamic> toJson() {
@@ -199,6 +207,7 @@ class Stock {
     required this.unitPackageId,
     required this.unit,
     required this.notes,
+    required this.unitpacakge,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -214,6 +223,7 @@ class Stock {
   late final String notes;
   late final String createdAt;
   late final String updatedAt;
+  late final Unitpacakge unitpacakge;
 
   Stock.fromJson(Map<String, dynamic> json){
     print("Starting Stock parsing ");
@@ -244,12 +254,29 @@ class Stock {
 
 
     print("before unit - inside stock");
-    unit = json['unit'];
-    notes = json['notes'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    if(json['unit']!=null){
+      unit = json['unit'];
+    }
+    print("before unit - inside stock 0 ");
+    if(json['notes']!=null) {
+      notes = json['notes'];
+    }
+    print("before unit - inside stock 1");
+    if(json['created_at'] !=null) {
+      createdAt = json['created_at'];
+    } print("before unit - inside stock 2");
+    if(json['updated_at']!=null) {
+      updatedAt = json['updated_at'];
+    }
     print("End Stock parsing ");
+    print(" just before unit - inside stock");
+    if(json['unitpacakge']!=null) {
+      unitpacakge = Unitpacakge.fromJson(json['unitpacakge']);
+      print("end unit - inside stock");
+    }
   }
+
+
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
@@ -266,6 +293,31 @@ class Stock {
     _data['notes'] = notes;
     _data['created_at'] = createdAt;
     _data['updated_at'] = updatedAt;
+    return _data;
+  }
+}
+
+class Unitpacakge {
+  Unitpacakge({
+    required this.id,
+    required this.title,
+    required this.status,
+  });
+  late final int id;
+  late final String title;
+  late final String status;
+
+  Unitpacakge.fromJson(Map<String, dynamic> json){
+    id = json['id'];
+    title = json['title'];
+    status = json['status'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['title'] = title;
+    _data['status'] = status;
     return _data;
   }
 }
@@ -374,6 +426,99 @@ class Team {
     _data['zone_id'] = zoneId;
     _data['auth_token'] = authToken;
     _data['member_adding_time'] = memberAddingTime;
+    return _data;
+  }
+}
+class Expenses1 {
+  Expenses1({
+    required this.id,
+    required this.userId,
+    required this.projectId,
+    required this.title,
+    required this.reason,
+    required this.cost,
+    required this.detail,
+    required this.fName,
+    required this.lName,
+  });
+  late final int id;
+  late final String userId;
+  late final String projectId;
+  late final String title;
+  late final String reason;
+  late final String cost;
+  late final String detail;
+  late final String fName;
+  late final String lName;
+
+  Expenses1.fromJson(Map<String, dynamic> json){
+    id = json['id'];
+    userId = json['user_id'];
+    projectId = json['project_id'];
+    title = json['title'];
+    reason = json['reason'];
+    cost = json['cost'];
+    detail = json['detail'];
+    fName = json['f_name'];
+    lName = json['l_name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['user_id'] = userId;
+    _data['project_id'] = projectId;
+    _data['title'] = title;
+    _data['reason'] = reason;
+    _data['cost'] = cost;
+    _data['detail'] = detail;
+    _data['f_name'] = fName;
+    _data['l_name'] = lName;
+    return _data;
+  }
+}
+
+class Actions1 {
+  Actions1({
+    required this.id,
+    required this.userId,
+    required this.projectId,
+    required this.title,
+    required this.reason,
+    required this.detail,
+    required this.fName,
+    required this.lName,
+  });
+  late final int id;
+  late final String userId;
+  late final String projectId;
+  late final String title;
+  late final String reason;
+  late final String detail;
+  late final String fName;
+  late final String lName;
+
+  Actions1.fromJson(Map<String, dynamic> json){
+    id = json['id'];
+    userId = json['user_id'];
+    projectId = json['project_id'];
+    title = json['title'];
+    reason = json['reason'];
+    detail = json['detail'];
+    fName = json['f_name'];
+    lName = json['l_name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['user_id'] = userId;
+    _data['project_id'] = projectId;
+    _data['title'] = title;
+    _data['reason'] = reason;
+    _data['detail'] = detail;
+    _data['f_name'] = fName;
+    _data['l_name'] = lName;
     return _data;
   }
 }

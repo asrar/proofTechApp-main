@@ -10,11 +10,26 @@ import 'package:proof_tech_app/AppLayer/Overseer.dart';
 import 'package:proof_tech_app/AppLayer/Provider.dart' as pro;
 import 'package:get/get.dart';
 import 'AppLayer/Overseer.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:proof_tech_app/helper/notification_helper.dart';
 
 
 
-void main() {
+
+Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  try {
+    if (GetPlatform.isMobile) {
+      final RemoteMessage? remoteMessage = await FirebaseMessaging.instance.getInitialMessage();
+
+
+      FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
+    }
+  }catch(e) {}
+
   runApp(const MyApp());
 }
 

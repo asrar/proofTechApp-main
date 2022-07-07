@@ -1,8 +1,11 @@
 import 'package:get/get.dart';
+import 'package:proof_tech_app/Login/LoginModel.dart';
 import 'package:proof_tech_app/View/material/material_count_grid.dart';
 import 'package:proof_tech_app/model/logsmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:proof_tech_app/View/logs/detail_page.dart';
+
+import '../../AppLayer/Overseer.dart';
 
 
 
@@ -28,7 +31,7 @@ class _material_projectState extends State<material_project> {
 
   @override
   Widget build(BuildContext context) {
-    ListTile makeListTile(Lesson lesson) => ListTile(
+    ListTile makeListTile(Materials material) => ListTile(
           contentPadding:
               EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           // leading: Container(
@@ -39,7 +42,7 @@ class _material_projectState extends State<material_project> {
           //   child: Icon(Icons.autorenew, color: Colors.white),
           // ),
           title: Text(
-            lesson.title,
+            material.name,
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold , fontSize: 20),
           ),
           // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
@@ -60,7 +63,7 @@ class _material_projectState extends State<material_project> {
 
                 child: Padding(
                     padding: EdgeInsets.only(left: 10.0),
-                    child: Text(lesson.level,
+                    child: Text(material.stock[0].quantity+" " +material.unitTitle,
                         style: TextStyle(color: Colors.white))),
               )
             ],
@@ -72,12 +75,12 @@ class _material_projectState extends State<material_project> {
           },
         );
 
-    Card makeCard(Lesson lesson) => Card(
+    Card makeCard(Materials material) => Card(
           elevation: 8.0,
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Container(
             decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
-            child: makeListTile(lesson),
+            child: makeListTile(material),
           ),
         );
 
@@ -86,9 +89,9 @@ class _material_projectState extends State<material_project> {
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: lessons?.length,
+        itemCount: Overseer.myMaterialList.length,
         itemBuilder: (BuildContext context, int index) {
-          return makeCard(lessons?[index]);
+          return makeCard(Overseer.myMaterialList[index]);
         },
       ),
     );

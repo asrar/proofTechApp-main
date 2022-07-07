@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../AppLayer/Overseer.dart';
+
 class ActivityDetailScreen extends StatefulWidget {
   const ActivityDetailScreen({Key? key}) : super(key: key);
 
@@ -9,10 +11,11 @@ class ActivityDetailScreen extends StatefulWidget {
 }
 
 class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
-
   int tabbedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
+    Overseer.setTeamStatus();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -23,8 +26,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
             height: Get.height * 0.03,
             width: Get.width * 0.25,
             decoration: BoxDecoration(
-                color: Colors.green,
-                borderRadius: BorderRadius.circular(5)),
+                color: Colors.green, borderRadius: BorderRadius.circular(5)),
             child: Center(
               child: TextButton(
                 onPressed: () {
@@ -58,7 +60,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
       body: SingleChildScrollView(
         child: Container(
             width: double.infinity,
-            padding: EdgeInsets.only(bottom: 30,left: 20),
+            padding: EdgeInsets.only(bottom: 30, left: 20),
             margin: EdgeInsets.symmetric(horizontal: 7),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,28 +101,24 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                 ),
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
-
                     child: Container(
                       height: 210,
                       child: ListView.builder(
-                          itemCount: 4,
+                          itemCount: Overseer.myteamList.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (ctx, index) {
+
+
                             return InkWell(
-                              onTap: (){
-
+                              onTap: () {
                                 tabbedIndex = index;
-                                setState(() {
-
-                                });
+                                setState(() {});
                                 print("index of tab is $index");
                                 showModalBottomSheet<void>(
-
                                   // context and builder are
                                   // required properties in this widget
                                   context: context,
                                   builder: (BuildContext context) {
-
                                     // we set up a container inside which
                                     // we create center column and display text
                                     return Container(
@@ -130,7 +128,9 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                         child: Column(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: <Widget>[
-                                            SizedBox(height: 2,),
+                                            SizedBox(
+                                              height: 2,
+                                            ),
                                             InkWell(
                                                 onTap: () {
                                                   Navigator.pop(context);
@@ -139,85 +139,127 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                                     alignment: Alignment.bottomCenter,
                                                     child: Padding(
                                                       padding:
-                                                      EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                                      child: Container(
-                                                        width: MediaQuery.of(context).size.width,
-                                                        padding: EdgeInsets.symmetric(vertical: 10),
-                                                        decoration: BoxDecoration(
-                                                            color: Color(0xffeb5f30),
-                                                            borderRadius:
-                                                            BorderRadius.all(Radius.circular(10))),
-                                                        child: Center(
-                                                            child: Text(
-                                                              'work Stopped',
-                                                              style: TextStyle(
-                                                                  fontSize: 20,
-                                                                  color: Colors.white,
-                                                                  letterSpacing: 1,
-                                                                  fontFamily: 'Poppins'),
-                                                            )),
-                                                      ),
-                                                    ))
-                                            ),
-                                            SizedBox(height: 2,),
-                                            InkWell(
-                                                onTap: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Align(
-                                                    alignment: Alignment.bottomCenter,
-                                                    child: Padding(
-                                                      padding:
-                                                      EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                                      child: Container(
-                                                        width: MediaQuery.of(context).size.width,
-                                                        padding: EdgeInsets.symmetric(vertical: 10),
-                                                        decoration: BoxDecoration(
-                                                            color: Color(0xffeb5f30),
-                                                            borderRadius:
-                                                            BorderRadius.all(Radius.circular(10))),
-                                                        child: Center(
-                                                            child: Text(
-                                                              'Work Finished',
-                                                              style: TextStyle(
-                                                                  fontSize: 20,
-                                                                  color: Colors.white,
-                                                                  letterSpacing: 1,
-                                                                  fontFamily: 'Poppins'),
-                                                            )),
-                                                      ),
-                                                    ))
-                                            ),
-                                            SizedBox(height: 2,),
-                                            InkWell(
-                                                onTap: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Align(
-                                                    alignment: Alignment.bottomCenter,
-                                                    child: Padding(
-                                                      padding:
-                                                      EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                                      child: Container(
-                                                        width: MediaQuery.of(context).size.width,
-                                                        padding: EdgeInsets.symmetric(vertical: 10),
-                                                        decoration: BoxDecoration(
-                                                            color: Color(0xffeb5f30),
-                                                            borderRadius:
-                                                            BorderRadius.all(Radius.circular(10))),
-                                                        child: Center(
-                                                            child: Text(
-                                                              'Assign Other work',
-                                                              style: TextStyle(
-                                                                  fontSize: 20,
-                                                                  color: Colors.white,
-                                                                  letterSpacing: 1,
-                                                                  fontFamily: 'Poppins'),
-                                                            )),
-                                                      ),
-                                                    ))
-                                            ),
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 20,
 
+                                                              vertical: 10),
+                                                      child: Container(
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 10),
+                                                        decoration: BoxDecoration(
+                                                            color: Color(
+                                                                0xffeb5f30),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10))),
+                                                        child: Center(
+                                                            child: Text(
+                                                          'work Stopped',
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              color:
+                                                                  Colors.white,
+                                                              letterSpacing: 1,
+                                                              fontFamily:
+                                                                  'Poppins'),
+                                                        )),
+                                                      ),
+                                                    ))),
+                                            SizedBox(
+                                              height: 2,
+                                            ),
+                                            InkWell(
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Align(
+                                                    alignment:
+                                                        Alignment.bottomCenter,
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 20,
+                                                              vertical: 10),
+                                                      child: Container(
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 10),
+                                                        decoration: BoxDecoration(
+                                                            color: Color(
+                                                                0xffeb5f30),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10))),
+                                                        child: Center(
+                                                            child: Text(
+                                                          'Work Finished',
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              color:
+                                                                  Colors.white,
+                                                              letterSpacing: 1,
+                                                              fontFamily:
+                                                                  'Poppins'),
+                                                        )),
+                                                      ),
+                                                    ))),
+                                            SizedBox(
+                                              height: 2,
+                                            ),
+                                            InkWell(
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Align(
+                                                    alignment:
+                                                        Alignment.bottomCenter,
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 20,
+                                                              vertical: 10),
+                                                      child: Container(
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 10),
+                                                        decoration: BoxDecoration(
+                                                            color: Color(
+                                                                0xffeb5f30),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10))),
+                                                        child: Center(
+                                                            child: Text(
+                                                          'Assign Other work',
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              color:
+                                                                  Colors.white,
+                                                              letterSpacing: 1,
+                                                              fontFamily:
+                                                                  'Poppins'),
+                                                        )),
+                                                      ),
+                                                    ))),
                                           ],
                                         ),
                                       ),
@@ -226,114 +268,123 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                 );
                               },
                               child: Card(
-
-
-                                  color: index==tabbedIndex ? Colors.deepOrange : Colors.white,
-                                  child:Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                  Container(
-
-
-
-                                    margin: EdgeInsets.only(right: 12, left: 12),
-                                    width: 120,
-                                    height: 100,
-                                    decoration: BoxDecoration(
-
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                              "assets/images/waleed.jpeg",
-                                            ),
-                                            fit: BoxFit.cover)),
-                                    child: Text(""),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Padding(
-
-                                    padding: const EdgeInsets.only(left:8.0),
-                                    child: Text('Ahmed Shehzad', style: TextStyle(
-
-                                      fontWeight: FontWeight.w600,
-
-                                      letterSpacing: 1
-                                    ),),
-                                  ),
-
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 8.0),
-                                        child: Text('Worker', style: TextStyle(
-                                            fontWeight: FontWeight.w800,
-                                            letterSpacing: 1
-                                        ),),
-                                      ),
-                                      SizedBox(height: 15,),
-                                      Container(
-                                        padding: EdgeInsets.only(left: 10),
-                                        child: Container(
-
-                                          //padding: EdgeInsets.only(left: 30),
-                                          height: Get.height * 0.045 ,
-                                          width: Get.width * 0.30,
+                                  color: index == tabbedIndex
+                                      ? Colors.deepOrange
+                                      : Colors.white,
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              right: 12, left: 12),
+                                          width: 120,
+                                          height: 100,
                                           decoration: BoxDecoration(
-                                              color: Colors.green,
-                                              borderRadius: BorderRadius.circular(15)),
-                                          child: Center(
-
-
-                                            child: TextButton(
-                                              onPressed: () {
-                                                Get.to(ActivityDetailScreen());
-                                              },
-                                              child: Text(
-                                                "working",
-                                                style: TextStyle(color: Colors.black),
+                                              image: DecorationImage(
+                                                  image: AssetImage(
+                                                    "assets/images/waleed.jpeg",
+                                                  ),
+                                                  fit: BoxFit.cover)),
+                                          child: Text(""),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8.0),
+                                          child: Text(
+                                           Overseer.myteamList[index].fName +" "+Overseer.myteamList[index].lName,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                letterSpacing: 1),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8.0),
+                                          child: Text(
+                                            Overseer.myteamList[index].roleId == 4 ? "Worker" : "Supervisor",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w800,
+                                                letterSpacing: 1),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.only(left: 10),
+                                          child: Container(
+                                            //padding: EdgeInsets.only(left: 30),
+                                            height: Get.height * 0.045,
+                                            width: Get.width * 0.30,
+                                            decoration: BoxDecoration(
+                                                color: Colors.green,
+                                                borderRadius:
+                                                    BorderRadius.circular(15)),
+                                            child: Center(
+                                              child: TextButton(
+                                                onPressed: () {
+                                                  // Get.to(
+                                                  //     ActivityDetailScreen());
+                                                },
+                                                child: Text(
+                                                  "working",
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                ])),
-                             //),
+                                      ])),
+                              //),
                             );
                           }),
-                    )
-                ),
+                    )),
                 SizedBox(
                   height: 15,
                 ),
-                Padding(padding: EdgeInsets.symmetric(horizontal: 20),
-                child:Text("Time Expected : ",style: TextStyle(
-                  fontFamily: 'poppins',
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 1
-                ),)),
+                Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      "Time Expected : ",
+                      style: TextStyle(
+                          fontFamily: 'poppins',
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 1),
+                    )),
                 SizedBox(
                   height: 8,
                 ),
-                Padding(padding: EdgeInsets.symmetric(horizontal: 20),
-                    child:Text("Start Time : ",style: TextStyle(
-                        fontFamily: 'poppins',
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 1
-                    ),)),
+                Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      "Start Time : ",
+                      style: TextStyle(
+                          fontFamily: 'poppins',
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 1),
+                    )),
                 SizedBox(
                   height: 8,
                 ),
-                Padding(padding: EdgeInsets.symmetric(horizontal: 20),
-                    child:Text("End Time : ",style: TextStyle(
-                        fontFamily: 'poppins',
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 1
-                    ),)),
-
+                Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      "End Time : ",
+                      style: TextStyle(
+                          fontFamily: 'poppins',
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 1),
+                    )),
                 SizedBox(
                   height: 15,
                 ),
                 Container(
-                  padding: EdgeInsets.only(top:10, left: 30,bottom: 10),
+                  padding: EdgeInsets.only(top: 10, left: 30, bottom: 10),
                   height: Get.height * 0.090,
                   width: Get.width * 0.85,
                   decoration: BoxDecoration(
@@ -342,7 +393,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                   child: Center(
                     child: TextButton(
                       onPressed: () {
-                       Get.back();
+                        Get.back();
                       },
                       child: Text(
                         "Activity Work Finished",

@@ -1,4 +1,4 @@
-package com.example.proof_tech_app
+package salva.fastfood.customer
 
 import io.flutter.embedding.android.FlutterActivity
 

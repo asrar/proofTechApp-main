@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
             leading: Column(
               children: [
 
-               Padding(padding: EdgeInsets.only(top: 15),
+               Padding(padding: EdgeInsets.only(top: 10),
                child: Text(
                      "User",
                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold ,color: Colors.deepOrange),
@@ -45,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
               IconButton(
                 onPressed: () {
                   Get.to(() => SignIn());
+
                 },
                 icon: const Icon(Icons.circle_notifications_outlined,color: Colors.deepOrange,),
               ),

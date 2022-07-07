@@ -1,8 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.proof_tech_app">
+    package="salva.fastfood.customer">
    <application
-        android:label="proof_tech_app"
+        android:label="Proof Tech"
         android:icon="@mipmap/ic_launcher">
+
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyDMX0yL0QoDYTsEprGM9DZrXmwHLb-tDnA"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -27,6 +31,12 @@
               android:name="io.flutter.embedding.android.SplashScreenDrawable"
               android:resource="@drawable/launch_background"
               />
+
+            <meta-data
+                android:name="com.google.firebase.messaging.default_notification_channel_id"
+                android:value="stackfood" />
+
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
