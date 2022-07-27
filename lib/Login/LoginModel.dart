@@ -71,6 +71,7 @@ class Data {
     roleId = json['role_id'];
     zoneId = json['zone_id'];
     authToken = json['auth_token'];
+    print("parsing 2.0");
     Projects1 = List.from(json['Projects']).map((e)=>Projects.fromJson(e)).toList();
   }
 
@@ -126,19 +127,28 @@ class Projects {
   late final List<Actions1> actions1;
 
   Projects.fromJson(Map<String, dynamic> json){
+    print("- parsing project 1.0");
     id = json['id'];
     projectTypeId = json['project_type_id'];
     name = json['name'];
     description = json['description'];
     status = json['status'];
+    print("- parsing project 1.0 A");
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    print("- parsing project 1.0 B");
     material = List.from(json['material']).map((e)=>Materials.fromJson(e)).toList();
+    print("- parsing project 1.1");
     tools = List.from(json['tools']).map((e)=>Tools.fromJson(e)).toList();
+    print("- parsing project 1.2");
     team = List.from(json['team']).map((e)=>Team.fromJson(e)).toList();
+    print("- parsing project 1.3");
     expenses1 = List.from(json['expenses1']).map((e)=>Expenses1.fromJson(e)).toList();
+    print("- parsing project 1.4");
     actions1 = List.from(json['actions1']).map((e)=>Actions1.fromJson(e)).toList();
+    print("- parsing project 1.5");
     type = Type.fromJson(json['type']);
+    print("- parsing project 2.0");
   }
 
   Map<String, dynamic> toJson() {
@@ -150,7 +160,7 @@ class Projects {
     _data['status'] = status;
     _data['created_at'] = createdAt;
     _data['updated_at'] = updatedAt;
-    _data['material'] = material.map((e)=>e.toJson()).toList();
+    _data['tool'] = material.map((e)=>e.toJson()).toList();
     _data['tools'] = tools.map((e)=>e.toJson()).toList();
     _data['team'] = team.map((e)=>e.toJson()).toList();
     _data['expenses1'] = expenses1.map((e)=>e.toJson()).toList();

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:proof_tech_app/View/Activities/activity_details.dart';
 import 'package:proof_tech_app/View/home/home_screen.dart';
+import 'package:proof_tech_app/logs/LogsManager.dart';
 
 import '../../AppLayer/Overseer.dart';
+import '../../AppLayer/Provider.dart';
 
 class ActivitiesScreen extends StatefulWidget {
   const ActivitiesScreen({Key? key}) : super(key: key);
@@ -39,8 +42,8 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
             ),
           )
         ],
-        title: const Text(
-          "Activities A",
+        title:  Text(
+          "${Overseer.myProjectActicity}",
           style: TextStyle(fontFamily: 'poppins'),
         ),
         leading: Column(
@@ -48,7 +51,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
             SizedBox(
               height: Get.height * 0.025,
             ),
-            const Text(
+             Text(
               "",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
@@ -99,9 +102,33 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                                           crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                           children: [
+
                                             RichText(
                                               text: TextSpan(
-                                                  text: 'Start Date:',
+                                                  text: 'WORK DATE   ',
+                                                  style: TextStyle(
+                                                      fontFamily: 'poppins',
+                                                      fontWeight: FontWeight.bold,
+
+                                                      letterSpacing: 3,
+                                                      color: Colors.deepOrange),
+                                                  children: [
+                                                    TextSpan(
+                                                        text:
+                                                        getToday(),
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                            FontWeight.w500,
+                                                            color:
+                                                            Color(0xffeb5f30)))
+                                                  ]),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            RichText(
+                                              text: TextSpan(
+                                                  text: 'Start Time:   ',
                                                   style: TextStyle(
                                                       fontFamily: 'poppins',
                                                       letterSpacing: 1,
@@ -109,7 +136,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                                                   children: [
                                                     TextSpan(
                                                         text:
-                                                        '10 June 2022 9:30 AM',
+                                                        getTime(),
                                                         style: TextStyle(
                                                             fontWeight:
                                                             FontWeight.w500,
@@ -122,14 +149,14 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                                             ),
                                             RichText(
                                               text: TextSpan(
-                                                  text: 'Finished Date & Time : ',
+                                                  text: 'End Time',
                                                   style: TextStyle(
                                                       fontFamily: 'poppins',
                                                       letterSpacing: 1,
                                                       color: Colors.black),
                                                   children: [
                                                     TextSpan(
-                                                        text: '-- --',
+                                                        text: '',
                                                         style: TextStyle(
                                                             fontWeight:
                                                             FontWeight.w500,
@@ -141,11 +168,11 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                                               height: 15,
                                             ),
                                             Container(
-                                              padding: EdgeInsets.only(left: 90),
+                                              padding: EdgeInsets.only(left: 50),
                                               child: Container(
                                                 //padding: EdgeInsets.only(left: 30),
                                                 height: Get.height * 0.060,
-                                                width: Get.width * 0.30,
+                                                width: Get.width * 0.50,
                                                 decoration: BoxDecoration(
                                                     color: Colors.deepOrange,
                                                     borderRadius:
@@ -153,13 +180,14 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                                                 child: Center(
                                                   child: TextButton(
                                                     onPressed: () {
+                                                      Overseer.myActiveActicity = Overseer.myActivities[index];
                                                       Get.to(
                                                           ActivityDetailScreen());
                                                     },
                                                     child: Text(
-                                                      "Monitor",
+                                                      "Monitor Team",
                                                       style: TextStyle(
-                                                          color: Colors.black),
+                                                          color: Colors.white),
                                                     ),
                                                   ),
                                                 ),
@@ -169,10 +197,10 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                                               height: 15,
                                             ),
                                             Container(
-                                              padding: EdgeInsets.only(left: 90),
+                                              padding: EdgeInsets.only(left: 50),
                                               child: Container(
                                                 height: Get.height * 0.060,
-                                                width: Get.width * 0.30,
+                                                width: Get.width * 0.50,
                                                 decoration: BoxDecoration(
                                                     color: Colors.green,
                                                     borderRadius:
@@ -180,11 +208,13 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                                                 child: Center(
                                                   child: TextButton(
                                                     onPressed: () {
-                                                      Get.to(
-                                                          ActivityDetailScreen());
+
+                                                      logActivity(context,"Work Started","Activity work",Overseer.myActivities[index] +" Has been started ");
+                                                      // Get.to(
+                                                      //     ActivityDetailScreen());
                                                     },
                                                     child: Text(
-                                                      "Activity Detail",
+                                                      "Start Work Today",
                                                       style: TextStyle(
                                                           color: Colors.black),
                                                     ),
@@ -192,6 +222,35 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                                                 ),
                                               ),
                                             ),
+                                            // Stop work
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.only(left: 50),
+                                              child: Container(
+                                                height: Get.height * 0.060,
+                                                width: Get.width * 0.50,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.red,
+                                                    borderRadius:
+                                                    BorderRadius.circular(15)),
+                                                child: Center(
+                                                  child: TextButton(
+                                                    onPressed: () {
+                                                      Overseer.myProjectActicity = Overseer.myActivities[index];
+                                                      logActivity(context,"Work Ended","Activity work",Overseer.myActivities[index] +" has been stopped ");
+                                                    },
+                                                    child: Text(
+                                                      "End Work Today",
+                                                      style: TextStyle(
+                                                          color: Colors.black),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+
                                           ],
                                         )
                                       ],
@@ -206,4 +265,63 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
     ),
     );
 }
+  String getToday(){
+    var now = new DateTime.now();
+    var formatter = new DateFormat('dd-MM-yyyy');
+    String formattedDate = formatter.format(now);
+    return formattedDate;
+  }
+
+  String getTime(){
+    var now = new DateTime.now();
+    var formatter = new DateFormat('hh:mm:ss a ');
+    String formattedDate = formatter.format(now);
+    return formattedDate;
+  }
+
+  bool logActivity(BuildContext context,String type,String title,String activityName) {
+
+    LogsManager logger = Provider.of(context).fetch(
+        LogsManager);
+
+    logger.inLogType.add("team_project_rolecall");
+    // adding title and description
+    logger.inLogTitle.add(" ${type}: \" ${title} \"  on  \" ${activityName} \" .");
+    logger.inLogDescription.add("type.");
+    // adding value for Actor1
+    logger.inLogActor1.add(Overseer.supervisorName);
+    logger.inLogActor1Id.add(Overseer.supervisorId);
+    // adding value for Actor2
+
+    logger.inLogActor2.add("");
+    logger.inLogActor2Id.add(0);
+
+    // adding value for Item1
+    logger.inLogItem1.add("");
+    logger.inLogItem1Id.add(0);
+
+    // adding value for Item2
+    logger.inLogItem2.add(Overseer.projectName);
+    logger.inLogItem2Id.add(Overseer.projectId);
+
+    logger.logLevel.add(1);
+
+    print(" Pre call of event ");
+    logger.logger$.listen((event) async {
+
+      print(" post call of event ");
+      Get.snackbar(type,
+        title
+        ,
+        dismissDirection: DismissDirection.horizontal,
+        isDismissible: true,
+        backgroundColor: Colors.deepOrange,
+        duration: Duration(seconds: 2),
+
+      );
+
+    });
+    return true;
+  }
+
 }

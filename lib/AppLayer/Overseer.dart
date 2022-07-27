@@ -1,7 +1,9 @@
 import 'package:proof_tech_app/Login/UserManager.dart';
+import 'package:proof_tech_app/View/Add_Expanse/AddExpenseManager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Login/LoginModel.dart';
+import '../View/Add_Action/AddActionManager.dart';
 import '../logs/LogsManager.dart';
 import 'package:proof_tech_app/Login/LoginModel.dart';
 
@@ -33,12 +35,25 @@ class Overseer {
   static List<Materials> myMaterialList  = new List.empty();
   static List<Tools> myToolList  = new List.empty();
   static List<String> myActivities =  new List.empty();
+  static String myProjectActicity =  "";
+  static String myActiveActicity =  "";
   static  Map<String, int> teamActivityStatus = {
   };
   static  Map<String, String> teamRollCallTime = {
   };
   static bool iSTodayRollCallDone = false;
   static String TodayRollCallText = "";
+
+  static String activeMaterial = "";
+  static String activeMaterialQuantityAndUnit = "";
+
+  static String activeUnit = "";
+
+  static String activeTool = "";
+  static String activeToolQuantityAndUnit = "";
+
+  static String activeVehicle = "";
+  static String activeVehicleStatus = "";
 
   //////
   static String csrf_token_overseer = "";
@@ -81,6 +96,8 @@ class Overseer {
     setTeamRollCallTime();
     register(UserManager, UserManager());
     register(LogsManager, LogsManager());
+    register(AddExpenseManager, AddExpenseManager());
+    register(AddActionManager, AddActionManager());
   }
 
   static printWrapped(String text) {

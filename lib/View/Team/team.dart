@@ -5,6 +5,9 @@ import 'package:proof_tech_app/logs/LogsManager.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../AppLayer/Provider.dart';
+import 'package:scroll_loop_auto_scroll/scroll_loop_auto_scroll.dart';
+
+import '../home/home_screen.dart';
 
 class TeamScreen extends StatefulWidget {
   const TeamScreen({Key? key}) : super(key: key);
@@ -42,15 +45,16 @@ class _TeamScreenState extends State<TeamScreen> {
             child: Center(
               child: TextButton(
                 onPressed: () {
-                  //    Get.to(ProjectScreen());
+                  Get.to(HomeScreen());
                 },
                 child: Text(
-                  "Project C",
+                  Overseer.projectName,
                   style: TextStyle(color: Colors.black),
                 ),
               ),
             ),
-          )
+          ),
+
         ],
         title: Text(
           "Team",
@@ -60,12 +64,30 @@ class _TeamScreenState extends State<TeamScreen> {
         leading: Column(
           children: [
             SizedBox(
-              height: Get.height * 0.025,
+              height: Get.height * 0.001,
             ),
-            const Text(
-              "",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
+            Container(
+              height: Get.height * 0.097,
+              width: Get.width * 0.99,
+              decoration: BoxDecoration(
+                  color: Colors.green, borderRadius: BorderRadius.circular(5)),
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 25),
+
+                child: TextButton(
+                  onPressed: () {
+                    removePreviousRollCall();
+                    tabbedIndex = 0;
+                    isPresent = true;
+                    setState(() {});
+                  },
+                  child: Text(
+                    "Roll Call",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -216,7 +238,8 @@ class _TeamScreenState extends State<TeamScreen> {
                                                                     // adding Type
                                                                     manager.inLogType.add("team_project_rolecall");
                                                                     // adding title and description
-                                                                    manager.inLogTitle.add("Roll Call for ${Overseer.projectName} on ${getToday()}");
+                                                                    manager.inLogTitle.add("Roll Call for ${Overseer.myteamList[tabbedIndex].fName + " " +
+                                                                        Overseer.myteamList[tabbedIndex].lName} on ${getToday()}");
                                                                     manager.inLogDescription.add("Adding Roll call.");
                                                                     // adding value for Actor1
                                                                     manager.inLogActor1.add(Overseer.supervisorName);
@@ -238,7 +261,7 @@ class _TeamScreenState extends State<TeamScreen> {
 
 
 
-                                                                    manager.isReallyTapped$.listen((event) async {
+                                                                    manager.logger$.listen((event) async {
 
 
 
@@ -270,7 +293,8 @@ class _TeamScreenState extends State<TeamScreen> {
                                               SizedBox(
                                                 width: 10,
                                               ),
-                                              Container(
+                                              Overseer.teamRollCallTime[Overseer.myteamList[index].fName + " " +
+                                                  Overseer.myteamList[index].lName+"-"+Overseer.myteamList[index].id.toString()]=="0" ? Container(
                                                 height: Get.height * 0.05,
                                                 width: Get.width * 0.25,
                                                 decoration: BoxDecoration(
@@ -281,7 +305,7 @@ class _TeamScreenState extends State<TeamScreen> {
                                                 child: Center(
                                                   child: TextButton(
                                                     onPressed: () {
-                                                      removePreviousRollCall();
+                                                  //    removePreviousRollCall();
                                                       tabbedIndex = index;
                                                       isPresent = true;
                                                       setState(() {});
@@ -293,7 +317,7 @@ class _TeamScreenState extends State<TeamScreen> {
                                                     ),
                                                   ),
                                                 ),
-                                              )
+                                              ):Text(""),
                                             ],
                                           )
                                   ],

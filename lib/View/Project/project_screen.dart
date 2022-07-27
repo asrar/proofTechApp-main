@@ -101,6 +101,21 @@ class _ProjectScreenState extends State<ProjectScreen> {
                   onTap: () {
                     Overseer.projectName = Overseer.myProjects[selected_index].name;
                     Overseer.project = Overseer.myProjects[selected_index];
+    //Overseer.userId = _userList[0].data.id;
+//    print("Over seer User ID ${Overseer.userId} Sign In User ID ${_userList[0].data.Projects1.length}");
+//    Overseer.userName = _userList[0].data.fName  +" "+ _userList[0].data.lName;
+  //  Overseer.supervisorName = _userList[0].data.fName  +" "+ _userList[0].data.lName;
+  //  Overseer.supervisorId = _userList[0].data.id;
+    Overseer.projectName = Overseer.myProjects[selected_index].name;
+    Overseer.projectId = Overseer.myProjects[selected_index].id;
+    Overseer.myteamList = Overseer.myProjects[selected_index].team;
+    Overseer.myMaterialList = Overseer.myProjects[selected_index].material;
+    Overseer.myToolList = Overseer.myProjects[selected_index].tools;
+    //Overseer.myProjects = Overseer..Projects1;
+    Overseer.myActivities = Overseer.myProjects[selected_index].type.myActivities;
+    Overseer.myProjectActicity = Overseer.myProjects[selected_index].type.name;
+   
+
                     Navigator.pop(context);
                   },
                   child: Align(

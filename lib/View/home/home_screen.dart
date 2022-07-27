@@ -8,8 +8,8 @@ import 'package:proof_tech_app/View/Add_Expanse/add_expanse_screen.dart';
 import 'package:proof_tech_app/View/Project/project_screen.dart';
 import 'package:proof_tech_app/View/Team/team.dart';
 import 'package:proof_tech_app/View/material/material_project.dart';
-import 'package:proof_tech_app/tool/tool_project.dart';
-
+import 'package:proof_tech_app/View/tool/tool_project.dart';
+//import 'package:flutter/tool';
 import '../logs/logsview.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           tabContainer(
                             title: "Material",
                             ontap: () {
-                              Get.to(material_project(title: "Project Material"));
+                              Get.to(MaterialsProject(title: "Project Material"));
                             },
                           ),
                           SizedBox(
@@ -169,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           tabContainer(
                             title: "Tools",
                             ontap: () {
-                              Get.to(tool_project(title: "Project Tools"));
+                              Get.to(ToolsProject(title: "Project Tools"));
                             },
                           ),
                           SizedBox(

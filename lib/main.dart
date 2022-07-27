@@ -20,7 +20,7 @@ import 'package:proof_tech_app/helper/notification_helper.dart';
 Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+ // await Firebase.initializeApp();
   try {
     if (GetPlatform.isMobile) {
       final RemoteMessage? remoteMessage = await FirebaseMessaging.instance.getInitialMessage();

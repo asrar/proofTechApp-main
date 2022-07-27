@@ -119,9 +119,11 @@ class UserService {
           Overseer.projectId = _userList[0].data.Projects1[0].id;
           Overseer.myteamList = _userList[0].data.Projects1[0].team;
           Overseer.myMaterialList = _userList[0].data.Projects1[0].material;
+          Overseer.myToolList = _userList[0].data.Projects1[0].tools;
           Overseer.myProjects = _userList[0].data.Projects1;
           Overseer.myActivities = _userList[0].data.Projects1[0].type.myActivities;
-          print("login status from service else  ${_userList[0].data.fName}  ${_userList[0].data.lName}  "
+          Overseer.myProjectActicity = _userList[0].data.Projects1[0].type.name;
+          print("login status from service   ${_userList[0].data.fName}  ${_userList[0].data.lName}  "
               "by ${_userList[0].data.Projects1[0].team[1].fName }");
         }
 

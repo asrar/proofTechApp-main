@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../AppLayer/Overseer.dart';
+import '../../AppLayer/Provider.dart';
+import '../../logs/LogsManager.dart';
 
 class ActivityDetailScreen extends StatefulWidget {
   const ActivityDetailScreen({Key? key}) : super(key: key);
@@ -71,7 +73,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
-                      "Title : Water Scheme",
+                      "${Overseer.myActiveActicity}",
                       style: TextStyle(
                           color: Color(0xffeb5f30),
                           fontFamily: 'poppins',
@@ -133,6 +135,8 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                             ),
                                             InkWell(
                                                 onTap: () {
+                                                  logActivity( context,"Work Finished","${Overseer.myteamList[index].fName +" "+Overseer.myteamList[index].lName}" ," has stoped work for ${Overseer.myActiveActicity} ");
+
                                                   Navigator.pop(context);
                                                 },
                                                 child: Align(
@@ -177,6 +181,8 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                             ),
                                             InkWell(
                                                 onTap: () {
+                                                  logActivity( context,"Work Finished","${Overseer.myteamList[index].fName +" "+Overseer.myteamList[index].lName}" ," has stoped work for ${Overseer.myActiveActicity} ");
+
                                                   Navigator.pop(context);
                                                 },
                                                 child: Align(
@@ -221,6 +227,8 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                             ),
                                             InkWell(
                                                 onTap: () {
+                                                  logActivity( context,"Work Finished","${Overseer.myteamList[index].fName +" "+Overseer.myteamList[index].lName}" ," has finished work for ${Overseer.myActiveActicity} ");
+
                                                   Navigator.pop(context);
                                                 },
                                                 child: Align(
@@ -305,7 +313,8 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                           padding:
                                               const EdgeInsets.only(left: 8.0),
                                           child: Text(
-                                            Overseer.myteamList[index].roleId == 4 ? "Worker" : "Supervisor",
+                                            Overseer.myteamList[index].roleId
+                                                .contains("5") ? "Worker" : "Supervisor",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w800,
                                                 letterSpacing: 1),
@@ -407,4 +416,51 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
       ),
     );
   }
+
+
+  bool logActivity(BuildContext context,String type,String title,String activityName) {
+
+    LogsManager logger = Provider.of(context).fetch(
+        LogsManager);
+
+    logger.inLogType.add("team_project_rolecall");
+    // adding title and description
+    logger.inLogTitle.add(" ${type}: \" ${title} \"  \" ${activityName} \" .");
+    logger.inLogDescription.add("type.");
+    // adding value for Actor1
+    logger.inLogActor1.add(Overseer.supervisorName);
+    logger.inLogActor1Id.add(Overseer.supervisorId);
+    // adding value for Actor2
+
+    logger.inLogActor2.add("");
+    logger.inLogActor2Id.add(0);
+
+    // adding value for Item1
+    logger.inLogItem1.add("");
+    logger.inLogItem1Id.add(0);
+
+    // adding value for Item2
+    logger.inLogItem2.add(Overseer.projectName);
+    logger.inLogItem2Id.add(Overseer.projectId);
+
+    logger.logLevel.add(1);
+
+    print(" Pre call of event ");
+    logger.logger$.listen((event) async {
+
+      print(" post call of event ");
+      Get.snackbar(type,
+        title
+        ,
+        dismissDirection: DismissDirection.horizontal,
+        isDismissible: true,
+        backgroundColor: Colors.deepOrange,
+        duration: Duration(seconds: 2),
+
+      );
+
+    });
+    return true;
+  }
+
 }

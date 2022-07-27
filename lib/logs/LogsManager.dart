@@ -80,21 +80,21 @@ class LogsManager  {
   }
 
 
-   Stream<bool> get isReallyTapped$ async* {
+   Stream<bool> get logger$ async* {
 
-    print("inside isUserAUTH  1 ");
+    print("event called ");
     if (logType.value != null ) {
 
       print(' >>>>>  query is this from new stream "${logType.value}"');
 
-      print("Actor1 is ${logActor1.value}");
-      print("Actor2 is ${logActor2.value}");
+     print("Actor1 is ${logActor1.value}");
+     print("Actor2 is ${logActor2.value}");
 
-      print("Item 1 is ${logItem1.value}");
-      print("Item 2 is ${logItem2.value}");
+     print("Item 1 is ${logItem1.value}");
+     print("Item 2 is ${logItem2.value}");
 
 
-
+    // yield false;
 
       yield await LogsService.log(logType.value,logTitle.value,logDescription.value,logActor1.value,logActor2.value,logActor1Id.value,
           logActor2Id.value,logItem1.value,logItem2.value,logItem1Id.value, logItem2Id.value,logLevel.value);
