@@ -19,6 +19,7 @@ class TeamScreen extends StatefulWidget {
 class _TeamScreenState extends State<TeamScreen> {
   int tabbedIndex = -1;
   bool isPresent = false;
+  bool isEndDay = false;
   @override
   Widget build(BuildContext context) {
     LogsManager manager = Provider.of(context).fetch(LogsManager);
@@ -26,8 +27,9 @@ class _TeamScreenState extends State<TeamScreen> {
     int hour = new DateTime.now().hour;
 
     print("need of the hour is ${hour}");
-    if(hour==9) {
+    if(hour==7) {
       setTodaysTeamRollCallText();
+      removePreviousRollCall();
     }
     //setTodaysTeamRollCallText();sia
     validForRollCall();
@@ -45,7 +47,7 @@ class _TeamScreenState extends State<TeamScreen> {
             child: Center(
               child: TextButton(
                 onPressed: () {
-                  Get.to(HomeScreen());
+                  Get.offAll(HomeScreen());
                 },
                 child: Text(
                   Overseer.projectName,
@@ -77,6 +79,7 @@ class _TeamScreenState extends State<TeamScreen> {
                 child: TextButton(
                   onPressed: () {
                     removePreviousRollCall();
+                    removePreviousEndDay();
                     tabbedIndex = 0;
                     isPresent = true;
                     setState(() {});
@@ -159,18 +162,7 @@ class _TeamScreenState extends State<TeamScreen> {
                                     SizedBox(
                                       height: 20,
                                     ),
-                                    tabbedIndex == index
-                                        ? Text("${Overseer.teamRollCallTime[Overseer.myteamList[tabbedIndex].fName + " " +
-                                        Overseer.myteamList[tabbedIndex].lName+"-"+Overseer.myteamList[tabbedIndex].id.toString()]} ",
-                                            style: isPresent == true
-                                                ? TextStyle(
-                                                    fontSize: 25,
-                                                    color: Colors.green)
-                                                : TextStyle(
-                                                    fontSize: 12,
-                                                    color: Overseer.myteamList[index].roleId
-                                                        .contains("4") ? Colors.white : Colors.orange))
-                                        : Row(
+                                     Row(
                                             children: [
                                               Container(
                                                 height: Get.height * 0.05,
@@ -192,11 +184,7 @@ class _TeamScreenState extends State<TeamScreen> {
                                                         // manager.inLogType.add("leave this");
 
 
-                                                        print(
-                                                            " data Inside >> ${Overseer.teamActivityStatus}");
 
-                                                        print(
-                                                            " time Inside >> ${Overseer.teamRollCallTime}");
 
 
 
@@ -205,6 +193,10 @@ class _TeamScreenState extends State<TeamScreen> {
                                                             Overseer.myteamList[index].lName+"-"+Overseer.myteamList[index].id.toString()]=="0" ?
                                                         TextButton(
                                                                 onPressed: () async{
+                                                                  tabbedIndex = index;
+                                                                  print("index is $index");
+                                                                  print("tab index is $tabbedIndex");
+
                                                                   setTodaysTeam(Overseer.myteamList[tabbedIndex].fName + " " +
                                                                       Overseer.myteamList[tabbedIndex].lName+"-"+Overseer.myteamList[tabbedIndex].id.toString(),1);
                                                                   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -236,7 +228,7 @@ class _TeamScreenState extends State<TeamScreen> {
                                                                   if (snapshot
                                                                       .hasData) {
                                                                     // adding Type
-                                                                    manager.inLogType.add("team_project_rolecall");
+                                                                    manager.inLogType.add(Overseer.logKeys[15]);
                                                                     // adding title and description
                                                                     manager.inLogTitle.add("Roll Call for ${Overseer.myteamList[tabbedIndex].fName + " " +
                                                                         Overseer.myteamList[tabbedIndex].lName} on ${getToday()}");
@@ -248,6 +240,7 @@ class _TeamScreenState extends State<TeamScreen> {
                                                                     manager.inLogActor2.add(Overseer.myteamList[tabbedIndex].fName + " " +
                                                                         Overseer.myteamList[tabbedIndex].lName);
                                                                     manager.inLogActor2Id.add(Overseer.myteamList[tabbedIndex].id);
+                                                                    manager.inQuantity.add("");
 
                                                                     // adding value for Item1
                                                                     manager.inLogItem1.add("");
@@ -263,11 +256,7 @@ class _TeamScreenState extends State<TeamScreen> {
 
                                                                     manager.logger$.listen((event) async {
 
-
-
-                                                                       print(
-
-                                                                          "actually tapped");
+                                                                      print("actually tapped");
                                                                     });
                                                                   } else {
                                                                     print(
@@ -281,10 +270,14 @@ class _TeamScreenState extends State<TeamScreen> {
                                                                   "Present",
                                                                   style: TextStyle(
                                                                       color: Colors
-                                                                          .black),
+                                                                          .white),
                                                                 ),
                                                               ): Text("${Overseer.teamRollCallTime[Overseer.myteamList[index].fName + " " +
-                                                            Overseer.myteamList[index].lName+"-"+Overseer.myteamList[index].id.toString()]}")
+                                                            Overseer.myteamList[index].lName+"-"+Overseer.myteamList[index].id.toString()]}"
+                                                            ,style: TextStyle(
+                                                            color: Colors
+                                                            .white),
+                                                        )
                                                             : Text(
                                                                 "NOT ALLOWED");
                                                       }),
@@ -293,31 +286,126 @@ class _TeamScreenState extends State<TeamScreen> {
                                               SizedBox(
                                                 width: 10,
                                               ),
-                                              Overseer.teamRollCallTime[Overseer.myteamList[index].fName + " " +
-                                                  Overseer.myteamList[index].lName+"-"+Overseer.myteamList[index].id.toString()]=="0" ? Container(
+
+                                              ////////  END DAY ----starts
+
+                                              Container(
                                                 height: Get.height * 0.05,
                                                 width: Get.width * 0.25,
                                                 decoration: BoxDecoration(
                                                     color: Colors.red,
                                                     borderRadius:
-                                                        BorderRadius.circular(
-                                                            5)),
+                                                    BorderRadius.circular(5)),
                                                 child: Center(
-                                                  child: TextButton(
-                                                    onPressed: () {
-                                                  //    removePreviousRollCall();
-                                                      tabbedIndex = index;
-                                                      isPresent = true;
-                                                      setState(() {});
-                                                    },
-                                                    child: Text(
-                                                      "Absent",
-                                                      style: TextStyle(
-                                                          color: Colors.black),
-                                                    ),
-                                                  ),
+                                                  child: StreamBuilder<Object>(
+                                                      stream: manager
+                                                          .isEndDayTapped$
+                                                          .asStream(),
+                                                      builder:
+                                                          (context, snapshot) {
+
+
+
+                                                        // manager.inLogType.add("leave this");
+
+
+
+
+
+
+                                                        return snapshot.hasData
+                                                            ? Overseer.teamEndDayTime[Overseer.myteamList[index].fName + " " +
+                                                            Overseer.myteamList[index].lName+"-"+Overseer.myteamList[index].id.toString()+"-endday"]=="0" ?
+                                                        TextButton(
+                                                          onPressed: () async{
+                                                            tabbedIndex = index;
+                                                            print("index is $index");
+                                                            print("tab index is $tabbedIndex");
+
+                                                            setTodaysEndDayTeam(Overseer.myteamList[tabbedIndex].fName + " " +
+                                                                Overseer.myteamList[tabbedIndex].lName+"-"+Overseer.myteamList[tabbedIndex].id.toString()+"-endday",1);
+                                                            SharedPreferences prefs = await SharedPreferences.getInstance();
+
+                                                            prefs.setInt(Overseer.myteamList[tabbedIndex].fName + " " +
+                                                                Overseer.myteamList[tabbedIndex].lName+"-"+Overseer.myteamList[tabbedIndex].id.toString()+"-endday", 1);
+
+
+                                                            tabbedIndex == index;
+                                                            print(Overseer.myteamList);
+                                                            print("---------<<<${index}>>>>>--------");
+                                                            print(Overseer.teamEndDayTime);
+                                                            print("---------<<<${Overseer.myteamList[index].fName + " " +
+                                                                Overseer.myteamList[index].lName+"-"+Overseer.myteamList[index].id.toString()}>>>>>--------");
+
+                                                            Overseer.teamEndDayTime[Overseer.myteamList[index].fName + " " +
+                                                                Overseer.myteamList[index].lName+"-"+Overseer.myteamList[index].id.toString()+"-endday"] = getTime();
+
+                                                            Overseer.iSTodayEndDayDone = true;
+
+                                                            //  SharedPreferences prefs = await SharedPreferences.getInstance();
+                                                            //  prefs.setInt("",1);
+
+
+                                                            tabbedIndex =
+                                                                index;
+                                                            isEndDay =
+                                                            false;
+                                                            if (snapshot
+                                                                .hasData) {
+                                                              // adding Type
+                                                              manager.inLogType.add(Overseer.logKeys[21]);
+                                                              // adding title and description
+                                                              manager.inLogTitle.add("End Day for ${Overseer.myteamList[tabbedIndex].fName + " " +
+                                                                  Overseer.myteamList[tabbedIndex].lName} on ${getToday()}");
+                                                              manager.inLogDescription.add("End Day work.");
+                                                              // adding value for Actor1
+                                                              manager.inLogActor1.add(Overseer.supervisorName);
+                                                              manager.inLogActor1Id.add(Overseer.supervisorId);
+                                                              // adding value for Actor2
+                                                              manager.inLogActor2.add(Overseer.myteamList[tabbedIndex].fName + " " +
+                                                                  Overseer.myteamList[tabbedIndex].lName);
+                                                              manager.inLogActor2Id.add(Overseer.myteamList[tabbedIndex].id);
+                                                              manager.inQuantity.add("");
+
+                                                              // adding value for Item1
+                                                              manager.inLogItem1.add("");
+                                                              manager.inLogItem1Id.add(0);
+
+                                                              // adding value for Item2
+                                                              manager.inLogItem2.add(Overseer.projectName);
+                                                              manager.inLogItem2Id.add(Overseer.projectId);
+
+                                                              manager.logLevel.add(1);
+
+
+
+                                                              manager.logger$.listen((event) async {
+
+                                                                print("actually tapped");
+                                                              });
+                                                            } else {
+                                                              print(
+                                                                  "you are late and now allowed now to enter team member Roll Call");
+                                                            }
+                                                            setState(
+                                                                    () {});
+                                                            //  Get.back();
+                                                          },
+                                                          child: Text(
+                                                            "End Day",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white),
+                                                          ),
+                                                        ): Text("${Overseer.teamEndDayTime[Overseer.myteamList[index].fName + " " +
+                                                            Overseer.myteamList[index].lName+"-"+Overseer.myteamList[index].id.toString()+"-endday"]}")
+                                                            : Text(
+                                                            "NOT ALLOWED");
+                                                      }),
                                                 ),
-                                              ):Text(""),
+                                              ),
+
+                                              ///////    -----ends
                                             ],
                                           )
                                   ],
@@ -352,6 +440,13 @@ class _TeamScreenState extends State<TeamScreen> {
     Overseer.teamActivityStatus[member] = present;
 
   }
+  void setTodaysEndDayTeam(String member,int present) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt(member,present);
+    Overseer.teamEndDayStatus[member] = present;
+
+  }
 
   void setTodaysTeamTime(String member,String present) async {
 
@@ -364,6 +459,17 @@ class _TeamScreenState extends State<TeamScreen> {
 
   }
 
+  void setTodaysTeamEndDayTime(String member,String present) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(member,present);
+    Overseer.teamEndDayTime[member] = present;
+
+    print("resetting");
+    print(Overseer.teamEndDayTime);
+
+  }
+
   void setTodaysTeamRollCallText() async {
 
     Overseer.TodayRollCallText = getToday();
@@ -372,6 +478,36 @@ class _TeamScreenState extends State<TeamScreen> {
 
 
   }
+
+  void setTodaysTeamEndDayText() async {
+
+    Overseer.TodayEndDayText = getToday();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("today_endday",getToday());
+
+
+  }
+
+  Future<bool> validForEndDay() async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? todayText = prefs.getString("today_endday");
+    print(" endday text (from userpref ) is ${todayText}");
+    print(" getToday() is ${getToday()}");
+    if(todayText!=null) {
+      if (todayText.contains(getToday())) {
+        Overseer.iSTodayEndDayDone = true;
+        return false;
+      }else{
+        // removePreviousRollCall();
+        Overseer.iSTodayEndDayDone = false;
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   Future<bool> validForRollCall() async {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -409,6 +545,24 @@ class _TeamScreenState extends State<TeamScreen> {
   }
   }
 
+  Future<void> removePreviousEndDay() async {
+
+    for(int i = 0 ; i<= Overseer.teamEndDayStatus.length;i++) {
+
+
+      setTodaysEndDayTeam(Overseer.myteamList[i].fName + " " +
+          Overseer.myteamList[i].lName+"-"+Overseer.myteamList[i].id.toString()+"-endday",0);
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt(Overseer.myteamList[i].fName + " " +
+          Overseer.myteamList[i].lName+"-"+Overseer.myteamList[i].id.toString()+"-endday", 0);
+
+      setTodaysTeamEndDayTime(Overseer.myteamList[i].fName + " " +
+          Overseer.myteamList[i].lName+"-"+Overseer.myteamList[i].id.toString()+"-endday","0");
+
+
+    }
+  }
 
 
 }

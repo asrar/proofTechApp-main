@@ -1,4 +1,7 @@
+import 'package:proof_tech_app/AppLayer/Overseer.dart';
 import 'package:proof_tech_app/AppLayer/Provider.dart';
+import 'package:proof_tech_app/admin/GetMTStockManager.dart';
+import 'package:proof_tech_app/admin/GetMTStockModel.dart';
 import 'package:proof_tech_app/getlogs/GetLogsManager.dart';
 import 'package:proof_tech_app/getlogs/GetLogsModel.dart';
 import 'package:proof_tech_app/model/logsmodel.dart';
@@ -12,27 +15,27 @@ import '../../AppLayer/Observer.dart';
 
 
 
-class logsview extends StatefulWidget {
-  logsview({ required this.title}) : super();
+class AdminToolsStock extends StatefulWidget {
+  AdminToolsStock({ required this.title}) : super();
 
   final String title;
 
   @override
-  _logsviewState createState() => _logsviewState();
+  _AdminToolsStockState createState() => _AdminToolsStockState();
 }
 
-class _logsviewState extends State<logsview> {
+class _AdminToolsStockState extends State<AdminToolsStock> {
   List ?lessons;
   ScrollController _scrollController = ScrollController();
   @override
   void initState() {
-   // lessons = getLessons();
+    // lessons = getLessons();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    GetLogsManager manager = Provider.of(context).fetch(GetLogsManager);
+    GetMTStockManager manager = Provider.of(context).fetch(GetMTStockManager);
 
     return Scaffold(
       backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
@@ -54,14 +57,14 @@ class _logsviewState extends State<logsview> {
         children: [
 
           Expanded(
-            child: Observer<List<GetLogsModel>>(
-              stream: manager.logsList,
+            child: Observer<List<AdminMaterails>>(
+              stream: manager.myAdminMaterialList,
               onSuccess: (context, data) {
                 // snapshot.data ?? 0;
 
-                List<GetLogsModel> _productList = data;
+                List<AdminTools> toolStockList = Overseer.myAdminToolList;
                 print("printing from list tile");
-                GetLogsModel logList = _productList[0];
+
 
                 return ListView.builder(
                   // for Auto-scrolling binding controller in build method
@@ -71,10 +74,10 @@ class _logsviewState extends State<logsview> {
 
                     addAutomaticKeepAlives: true,
                     scrollDirection: Axis.vertical,
-                    itemCount: _productList[0].data.length,
+                    itemCount: toolStockList.length,
                     itemBuilder: (BuildContext context, int index) {
                       print("printing from list tile");
-                      GetLogsModel _post = _productList[0];
+                      AdminTools toolStock = toolStockList[index];
 
 
 
@@ -83,9 +86,13 @@ class _logsviewState extends State<logsview> {
                         margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
                         child: Container(
                           decoration: BoxDecoration(color: Colors.white),
-                          child: Html(data: _productList[0].data[index],
-                            tagsList: Html.tags,
-                          ),
+                          child: toolStock.availableStock== 0 ?Text(toolStock.name +" - Available Quantity - 0" +
+                              " items" +" "
+                              +
+                               "- TYpe is: "+toolStock.admintooltype.name):
+                          Text(toolStock.name +" - Available Quantity -"+toolStock.availableStock.toString()+
+                              " items"
+                              + "- TYpe is: "+toolStock.admintooltype.name)
                         ),
                       );
                     });

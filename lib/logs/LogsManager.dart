@@ -13,6 +13,7 @@ class LogsManager  {
   final logActor1 = BehaviorSubject<String>();
   final logActor2 = BehaviorSubject<String>();
   final logItem1 = BehaviorSubject<String>();
+  final logQuantity = BehaviorSubject<String>();
   final logItem2 = BehaviorSubject<String>();
   final logActor1Id = BehaviorSubject<int>();
   final logActor2Id = BehaviorSubject<int>();
@@ -30,6 +31,7 @@ class LogsManager  {
   Stream<String> get logActor2$ => logActor2.stream;
   Stream<String> get logItem1$ => logItem1.stream;
   Stream<String> get logItem2$ => logItem2.stream;
+  Stream<String> get logQuantity$ => logQuantity.stream;
 
   Stream<int> get logActor1Id$ => logActor1Id.stream;
   Stream<int> get logActor2Id$ => logActor2Id.stream;
@@ -49,6 +51,7 @@ class LogsManager  {
   Sink<String> get inLogItem1 => logItem1.sink;
   Sink<String> get inLogItem2 => logItem2.sink;
 
+  Sink<String> get inQuantity => logQuantity.sink;
 
   Sink<int> get inLogActor1Id => logActor1Id.sink;
   Sink<int> get inLogActor2Id => logActor2Id.sink;
@@ -79,6 +82,25 @@ class LogsManager  {
      //CombineLatestStream([logType$], (values) => true);
   }
 
+  Future<bool> get isEndDayTapped$ {
+
+    inLogType.add("required");
+    print("--- from first method ${logType.hasValue}");
+
+    if(logType.hasValue) {
+      print(" ---- real taped value is "+logType.value);
+    }else {
+
+    }
+    if(logType.value.contains("required")){
+      return  logType$.contains("required");
+    }else{
+      return  logType$.contains("not Allowed");
+    }
+
+
+    //CombineLatestStream([logType$], (values) => true);
+  }
 
    Stream<bool> get logger$ async* {
 
@@ -97,7 +119,7 @@ class LogsManager  {
     // yield false;
 
       yield await LogsService.log(logType.value,logTitle.value,logDescription.value,logActor1.value,logActor2.value,logActor1Id.value,
-          logActor2Id.value,logItem1.value,logItem2.value,logItem1Id.value, logItem2Id.value,logLevel.value);
+          logActor2Id.value,logItem1.value,logItem2.value,logItem1Id.value, logItem2Id.value,logQuantity.value,logLevel.value);
     }
   }
 

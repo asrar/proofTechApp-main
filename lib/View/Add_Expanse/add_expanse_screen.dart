@@ -74,7 +74,7 @@ class _AddExpanseScreenScreenState extends State<AddExpanseScreen> {
                 height: 6,
               ),
               Text(
-                "Add Action to Project",
+                "Add Expense to Project",
                 style: TextStyle(
                     color: Color(0xffeb5f30),
                     fontWeight: FontWeight.bold,
@@ -94,7 +94,7 @@ class _AddExpanseScreenScreenState extends State<AddExpanseScreen> {
                         errortext: snapshot.error == null
                             ? ""
                             : snapshot.error.toString(),
-                        textFieldText: 'xyz@gmail.com',
+                        textFieldText: 'Title',
                         passwordTxt: false
                     );
                   }
@@ -120,12 +120,12 @@ class _AddExpanseScreenScreenState extends State<AddExpanseScreen> {
               SizedBox(
                 height: 10,
               ),
-              StreamBuilder<int>(
+              StreamBuilder<String>(
                   stream: manager.cost$,
                   builder: (context, snapshot) {
                     return CustomTextField(
                         onChanged: (value) {
-                          manager.inCost.add(int.parse(value));
+                          manager.inCost.add(value);
                         },
                         errortext: snapshot.error == null
                             ? ""
@@ -201,7 +201,7 @@ class _AddExpanseScreenScreenState extends State<AddExpanseScreen> {
                             LogsManager logger = Provider.of(context).fetch(
                                 LogsManager);
 
-                            logger.inLogType.add("team_project_rolecall");
+                            logger.inLogType.add(Overseer.logKeys[23]);
                             // adding title and description
                             logger.inLogTitle.add(" Added Expense of Cost \" ${manager.cost.value} \"  for \" ${manager.title.value} \" For Reason \" ${manager.reason.value} \" "
                                 " Details \" ${manager.details.value} \"  ");
@@ -213,6 +213,8 @@ class _AddExpanseScreenScreenState extends State<AddExpanseScreen> {
 
                             logger.inLogActor2.add("");
                             logger.inLogActor2Id.add(0);
+
+                            logger.inQuantity.add(manager.cost.value);
 
                             // adding value for Item1
                             logger.inLogItem1.add("");

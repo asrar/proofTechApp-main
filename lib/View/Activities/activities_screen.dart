@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:proof_tech_app/View/Activities/activity_details.dart';
+import 'package:proof_tech_app/View/Team_Ended_work/TeamWorkEndedScreen.dart';
+import 'package:proof_tech_app/View/Team_Started_Work/TeamWorkStartedScreen.dart';
 import 'package:proof_tech_app/View/home/home_screen.dart';
 import 'package:proof_tech_app/logs/LogsManager.dart';
 
@@ -19,6 +21,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //key: myGlobals.scaffoldKey,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
@@ -32,7 +35,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
             child: Center(
               child: TextButton(
                 onPressed: () {
-                     Get.to(HomeScreen());
+                     Get.offAll(HomeScreen());
                 },
                 child: Text(
                   Overseer.projectName,
@@ -144,26 +147,26 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                                                             Color(0xffeb5f30)))
                                                   ]),
                                             ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            RichText(
-                                              text: TextSpan(
-                                                  text: 'End Time',
-                                                  style: TextStyle(
-                                                      fontFamily: 'poppins',
-                                                      letterSpacing: 1,
-                                                      color: Colors.black),
-                                                  children: [
-                                                    TextSpan(
-                                                        text: '',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                            FontWeight.w500,
-                                                            color:
-                                                            Color(0xffeb5f30)))
-                                                  ]),
-                                            ),
+                                            // SizedBox(
+                                            //   height: 10,
+                                            // ),
+                                            // RichText(
+                                            //   text: TextSpan(
+                                            //       text: 'End Time',
+                                            //       style: TextStyle(
+                                            //           fontFamily: 'poppins',
+                                            //           letterSpacing: 1,
+                                            //           color: Colors.black),
+                                            //       children: [
+                                            //         TextSpan(
+                                            //             text: '',
+                                            //             style: TextStyle(
+                                            //                 fontWeight:
+                                            //                 FontWeight.w500,
+                                            //                 color:
+                                            //                 Color(0xffeb5f30)))
+                                            //       ]),
+                                            // ),
                                             SizedBox(
                                               height: 15,
                                             ),
@@ -208,13 +211,15 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                                                 child: Center(
                                                   child: TextButton(
                                                     onPressed: () {
+                                                      Overseer.myActiveActicity = Overseer.myActivities[index];
+                                                      Get.to(
 
-                                                      logActivity(context,"Work Started","Activity work",Overseer.myActivities[index] +" Has been started ");
-                                                      // Get.to(
-                                                      //     ActivityDetailScreen());
+                                                          TeamWorkStartedScreen());
+                                                    // logActivity(context,"Work Started","Activity work",Overseer.myActivities[index] +" Has been started ");
+
                                                     },
                                                     child: Text(
-                                                      "Start Work Today",
+                                                      "Assign Team Member",
                                                       style: TextStyle(
                                                           color: Colors.black),
                                                     ),
@@ -226,30 +231,34 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                                             SizedBox(
                                               height: 15,
                                             ),
-                                            Container(
-                                              padding: EdgeInsets.only(left: 50),
-                                              child: Container(
-                                                height: Get.height * 0.060,
-                                                width: Get.width * 0.50,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.red,
-                                                    borderRadius:
-                                                    BorderRadius.circular(15)),
-                                                child: Center(
-                                                  child: TextButton(
-                                                    onPressed: () {
-                                                      Overseer.myProjectActicity = Overseer.myActivities[index];
-                                                      logActivity(context,"Work Ended","Activity work",Overseer.myActivities[index] +" has been stopped ");
-                                                    },
-                                                    child: Text(
-                                                      "End Work Today",
-                                                      style: TextStyle(
-                                                          color: Colors.black),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
+                                            // Container(
+                                            //   padding: EdgeInsets.only(left: 50),
+                                            //   child: Container(
+                                            //     height: Get.height * 0.060,
+                                            //     width: Get.width * 0.50,
+                                            //     decoration: BoxDecoration(
+                                            //         color: Colors.red,
+                                            //         borderRadius:
+                                            //         BorderRadius.circular(15)),
+                                            //     child: Center(
+                                            //       child: TextButton(
+                                            //         onPressed: () {
+                                            //           Overseer.myActiveActicity = Overseer.myActivities[index];
+                                            //           Get.to(
+                                            //
+                                            //               TeamWorkEndedScreen());
+                                            //           //   logActivity(context,"Work Started","Activity work",Overseer.myActivities[index] +" Has been started ");
+                                            //
+                                            //         },
+                                            //         child: Text(
+                                            //           "End Work Today",
+                                            //           style: TextStyle(
+                                            //               color: Colors.black),
+                                            //         ),
+                                            //       ),
+                                            //     ),
+                                            //   ),
+                                            // ),
 
                                           ],
                                         )

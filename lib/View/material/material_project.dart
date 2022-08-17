@@ -38,6 +38,7 @@ class _MaterialsProjectState extends State<MaterialsProject> {
         Overseer.activeMaterialQuantityAndUnit = Overseer.activeMaterialQuantityAndUnit + "( "+
             (material.stock[i].quantity).trim().substring(1)+"" +material.unitTitle  +" )";
       }
+      print("--quantity---- ${Overseer.activeMaterialQuantityAndUnit}");
       return  ListTile(
           contentPadding:
           EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -85,7 +86,10 @@ class _MaterialsProjectState extends State<MaterialsProject> {
                   (material.stock[i].quantity).trim().substring(1)+"" +material.unitTitle  +" )";
             }
 
+            print("--quantity from cell---- ${Overseer.activeMaterialQuantityAndUnit}");
+
             Overseer.activeMaterial = material.name;
+            Overseer.activeMaterialId = material.id;
             Overseer.activeUnit = material.unitTitle;
             Get.to(MaterialsUsed());
           },

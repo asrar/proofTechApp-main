@@ -1,4 +1,6 @@
 import 'package:proof_tech_app/View/home/home_screen.dart';
+import 'package:proof_tech_app/admin/GetMTStockManager.dart';
+import 'package:proof_tech_app/admin/admin_home_screen.dart';
 import 'package:proof_tech_app/util/app_constants.dart';
 import 'package:proof_tech_app/util/dimensions.dart';
 
@@ -152,7 +154,19 @@ class _SignInState extends State<SignIn> {
                               //     await SharedPreferences.getInstance();
                               // _sharedPreferences.setInt(
                               //     'userId', Overseer.userId);
-                              Get.to(HomeScreen());
+
+                              print("-------- the real role is ${Overseer.roleId}");
+                              if(Overseer.roleId.contains("1")) {
+                                GetMTStockManager adminManager = Provider.of(context).fetch(GetMTStockManager);
+                                adminManager.myList.listen((event) {
+                                  Get.offAll(AdminHomeScreen());
+                                });
+
+
+
+                              }else {
+                                Get.offAll(HomeScreen());
+                              }
                               // Navigator.push(context,
                               //     MaterialPageRoute(builder: (context) {
                               //   return DoctorListScreen();

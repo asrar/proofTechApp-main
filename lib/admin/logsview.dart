@@ -1,4 +1,5 @@
 import 'package:proof_tech_app/AppLayer/Provider.dart';
+import 'package:proof_tech_app/admin/GetMTStockManager.dart';
 import 'package:proof_tech_app/getlogs/GetLogsManager.dart';
 import 'package:proof_tech_app/getlogs/GetLogsModel.dart';
 import 'package:proof_tech_app/model/logsmodel.dart';
@@ -12,16 +13,16 @@ import '../../AppLayer/Observer.dart';
 
 
 
-class logsview extends StatefulWidget {
-  logsview({ required this.title}) : super();
+class LogsView extends StatefulWidget {
+  LogsView({ required this.title}) : super();
 
   final String title;
 
   @override
-  _logsviewState createState() => _logsviewState();
+  _LogsViewState createState() => _LogsViewState();
 }
 
-class _logsviewState extends State<logsview> {
+class _LogsViewState extends State<LogsView> {
   List ?lessons;
   ScrollController _scrollController = ScrollController();
   @override

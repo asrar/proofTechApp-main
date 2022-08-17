@@ -84,52 +84,84 @@ class UserService {
 
       return false;
     } else {
-      print(
-          "########################## not error  but else #####################################");
+
+        if(content.contains("role_id")) {
+          print("--------------------------------------- role ID");
+          String sb = content.substring(content.indexOf("role_id")+10,content.indexOf("role_id")+11);
+          print("------ real role id is $sb");
+          Overseer.roleId = sb;
+          if(sb.contains("1")){
+            Overseer.userId = 2;
+            print("----------------Real admin");
+            Overseer.is_user_valid = true;
+
+
+          }else{
+
+          }
+        }
+
+
+
       var jString = [content];
       //print("printig from service >>> 1-1 done"+jString.toString().substring(jString.toString().lastIndexOf("csrf_token")));
 
       String arr = jString.toString();
+      
       List collection = json.decode(arr);
       print("status code logine before try"+response.statusCode.toString());
-      try {
-        print("status code logine inside try"+response.statusCode.toString());
-        print("//printig from service >>> ");
-        if (response.statusCode != 200) {
-          Overseer.login_status = "user-not-exist";
-          Overseer.is_user_valid = false;
+      if(Overseer.userId!=2) {
+        try {
+          print(
+              "status code logine inside try" + response.statusCode.toString());
+          print("//printig from service >>> ");
+          if (response.statusCode != 200) {
+            Overseer.login_status = "user-not-exist";
+            Overseer.is_user_valid = false;
 
-          print("login status from service " + Overseer.login_status);
-        } else {
-          Overseer.login_status = "verified-user";
-          Overseer.is_user_valid = true;
-          List collection = json.decode(arr);
-          print("user login parsing start");
-          List<LoginModel> _userList =
-              collection.map((json) => LoginModel.fromJson(json)).toList();
-          print("user login parisng end");
-        //  Overseer.userName = _userList[0].data.name+" "+_userList[0].data.email;
-          setNotificationActive(true);
-          Overseer.userId = _userList[0].data.id;
-          print("Over seer User ID ${Overseer.userId} Sign In User ID ${_userList[0].data.Projects1.length}");
-          Overseer.userName = _userList[0].data.fName  +" "+ _userList[0].data.lName;
-          Overseer.supervisorName = _userList[0].data.fName  +" "+ _userList[0].data.lName;
-          Overseer.supervisorId = _userList[0].data.id;
-          Overseer.projectName = _userList[0].data.Projects1[0].name;
-          Overseer.projectId = _userList[0].data.Projects1[0].id;
-          Overseer.myteamList = _userList[0].data.Projects1[0].team;
-          Overseer.myMaterialList = _userList[0].data.Projects1[0].material;
-          Overseer.myToolList = _userList[0].data.Projects1[0].tools;
-          Overseer.myProjects = _userList[0].data.Projects1;
-          Overseer.myActivities = _userList[0].data.Projects1[0].type.myActivities;
-          Overseer.myProjectActicity = _userList[0].data.Projects1[0].type.name;
-          print("login status from service   ${_userList[0].data.fName}  ${_userList[0].data.lName}  "
-              "by ${_userList[0].data.Projects1[0].team[1].fName }");
+            print("login status from service " + Overseer.login_status);
+          } else {
+            Overseer.login_status = "verified-user";
+            Overseer.is_user_valid = true;
+
+            List collection = json.decode(arr);
+            print("user login parsing start");
+            List<LoginModel> _userList =
+            collection.map((json) => LoginModel.fromJson(json)).toList();
+            print("user login parisng end");
+            //  Overseer.userName = _userList[0].data.name+" "+_userList[0].data.email;
+            setNotificationActive(true);
+            Overseer.userId = _userList[0].data.id;
+            Overseer.logKeys = _userList[0].logsKey;
+            print("Over seer User ID ${Overseer
+                .userId} Sign In User ID ${_userList[0].data.Projects1
+                .length}");
+            Overseer.userName =
+                _userList[0].data.fName + " " + _userList[0].data.lName;
+            Overseer.supervisorName =
+                _userList[0].data.fName + " " + _userList[0].data.lName;
+            Overseer.supervisorId = _userList[0].data.id;
+            Overseer.supervisorId = _userList[0].data.id;
+            Overseer.roleId = _userList[0].data.roleId;
+            Overseer.projectName = _userList[0].data.Projects1[0].name;
+            Overseer.projectId = _userList[0].data.Projects1[0].id;
+            Overseer.myteamList = _userList[0].data.Projects1[0].team;
+            Overseer.myMaterialList = _userList[0].data.Projects1[0].material;
+            Overseer.myToolList = _userList[0].data.Projects1[0].tools;
+            Overseer.myProjects = _userList[0].data.Projects1;
+            Overseer.myActivities =
+                _userList[0].data.Projects1[0].type.myActivities;
+            Overseer.myProjectActicity =
+                _userList[0].data.Projects1[0].type.name;
+            print("login status from service   ${_userList[0].data
+                .fName}  ${_userList[0].data.lName}  "
+                "by ${_userList[0].data.Projects1[0].team[1].fName }");
+          }
+
+          print("end of listen with status " + Overseer.login_status);
+        } catch (NoSuchMethodError) {
+          print("NoSuchMethodError caught ..hahahaha  ${NoSuchMethodError}");
         }
-
-        print("end of listen with status " + Overseer.login_status);
-      } catch (NoSuchMethodError) {
-        print("NoSuchMethodError caught ..hahahaha  ${NoSuchMethodError}");
       }
       return true;
     } // end of main top if ( does not contain error )

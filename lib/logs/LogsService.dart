@@ -6,7 +6,7 @@ class LogsService {
   static Future<bool> log(String logType,String logTitle,String logDescription,String logActor1,
       String logActor2,int logActor1Id,
   int logActor2Id,String logItem1,String logItem2,int logItem1Id,
-  int logItem2Id,int level) async {
+  int logItem2Id,String logQuantity,int level) async {
     http.Response response;
     String _url = "https://s3bits.com/rooftech/api/v1/auth/supervisor/addlog";
 
@@ -26,6 +26,7 @@ class LogsService {
       "item1_id" : logItem1Id,
       "item2" : logItem2,
       "item2_id" : logItem2Id,
+      "quantity" : logQuantity,
       "level" : level,
     }) );
 

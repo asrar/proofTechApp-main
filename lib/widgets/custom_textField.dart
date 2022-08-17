@@ -23,8 +23,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return Container(
       height: 50,
+     // width: 150,
       child: TextField(
           onChanged: widget.onChanged,
+
 
           // style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           obscureText: widget.passwordTxt,

@@ -27,6 +27,7 @@ class UserManager with Myvalidation {
     if (_email.value != null && _password.value != null) {
       String query = "email=${_email.value}&password=${_password.value}";
       print('query is this from new stream ${query}');
+
       yield await UserService.browse(query);
     }
   }

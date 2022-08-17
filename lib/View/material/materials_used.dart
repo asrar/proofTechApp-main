@@ -37,7 +37,7 @@ class _MaterialsUsedState extends State<MaterialsUsed> {
             child: Center(
               child: TextButton(
                 onPressed: () {
-                  Get.to(HomeScreen());
+                  Get.offAll(HomeScreen());
                 },
                 child: Text(
                   Overseer.projectName,
@@ -109,12 +109,12 @@ class _MaterialsUsedState extends State<MaterialsUsed> {
               SizedBox(
                 height: 30,
               ),
-              StreamBuilder<int>(
+              StreamBuilder<String>(
                   stream: manager.cost$,
                   builder: (context, snapshot) {
                     return CustomTextField(
                         onChanged: (value) {
-                          manager.inCost.add(int.parse(value));
+                          manager.inCost.add(value);
                         },
                         errortext: snapshot.error == null
                             ? ""
@@ -150,25 +150,30 @@ class _MaterialsUsedState extends State<MaterialsUsed> {
                             LogsManager logger = Provider.of(context).fetch(
                                 LogsManager);
 
-                            logger.inLogType.add("team_project_rolecall");
+                            logger.inLogType.add(Overseer.logKeys[7]);
                             // adding title and description
-                            logger.inLogTitle.add(" Material USED: \" ${Overseer.activeMaterial} \"  Quantity:  \" ${manager.cost.value} ${Overseer.activeUnit} \"  has been CONSUMED.");
-                            logger.inLogDescription.add("Material Used.");
+                            logger.inLogDescription.add(" Material USED: \" ${Overseer.activeMaterial} \"  Quantity:  \" ${manager.cost.value} ${Overseer.activeUnit} \"  has been CONSUMED.");
+                            logger.inLogTitle.add("Material Used.");
                             // adding value for Actor1
                             logger.inLogActor1.add(Overseer.supervisorName);
                             logger.inLogActor1Id.add(Overseer.supervisorId);
                             // adding value for Actor2
 
-                            logger.inLogActor2.add("");
-                            logger.inLogActor2Id.add(0);
+                            logger.inLogActor2.add("Admin");
+                            logger.inLogActor2Id.add(2);
 
                             // adding value for Item1
-                            logger.inLogItem1.add("");
-                            logger.inLogItem1Id.add(0);
+                            logger.inLogItem1.add(Overseer.activeMaterial);
+                            logger.inLogItem1Id.add(Overseer.activeMaterialId);
 
                             // adding value for Item2
                             logger.inLogItem2.add(Overseer.projectName);
                             logger.inLogItem2Id.add(Overseer.projectId);
+
+                            logger.logLevel.add(1);
+
+                            logger.inQuantity.add(manager.cost.value);
+
 
                             logger.logLevel.add(1);
 
@@ -246,27 +251,29 @@ class _MaterialsUsedState extends State<MaterialsUsed> {
                             LogsManager logger = Provider.of(context).fetch(
                                 LogsManager);
 
-                            logger.inLogType.add("team_project_rolecall");
+                            logger.inLogType.add(Overseer.logKeys[8]);
                             // adding title and description
-                            logger.inLogTitle.add(" Material RETURNED: \" ${Overseer.activeMaterial} \"  Quantity:  \" ${manager.cost.value} ${Overseer.activeUnit} \"  has been RETURNED TO STORE.");
-                            logger.inLogDescription.add("Material Returned.");
+                            logger.inLogDescription.add(" Material RETURNED: \" ${Overseer.activeMaterial} \"  Quantity:  \" ${manager.cost.value} ${Overseer.activeUnit} \"  has been RETURNED TO STORE.");
+                            logger.inLogTitle.add("Material Returned.");
                             // adding value for Actor1
                             logger.inLogActor1.add(Overseer.supervisorName);
                             logger.inLogActor1Id.add(Overseer.supervisorId);
                             // adding value for Actor2
                             //TODO: need to add active tool name and id when logType  will be tool_used_or_returned
-                            logger.inLogActor2.add("");
-                            logger.inLogActor2Id.add(0);
+                            logger.inLogActor2.add("Admin");
+                            logger.inLogActor2Id.add(2);
 
                             // adding value for Item1
-                            logger.inLogItem1.add("");
-                            logger.inLogItem1Id.add(0);
+                            logger.inLogItem1.add(Overseer.activeMaterial);
+                            logger.inLogItem1Id.add(Overseer.activeMaterialId);
 
                             // adding value for Item2
                             logger.inLogItem2.add(Overseer.projectName);
                             logger.inLogItem2Id.add(Overseer.projectId);
 
                             logger.logLevel.add(1);
+
+                            logger.inQuantity.add(manager.cost.value);
 
                             print(" Pre call of event ");
                             logger.logger$.listen((event) async {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:proof_tech_app/View/home/home_screen.dart';
 
 import '../../AppLayer/Overseer.dart';
 import '../../AppLayer/Provider.dart';
@@ -32,15 +33,15 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
             child: Center(
               child: TextButton(
                 onPressed: () {
-                  //    Get.to(ProjectScreen());
+                  Get.offAll(HomeScreen());
                 },
                 child: Text(
-                  "Project C",
+                  Overseer.projectName,
                   style: TextStyle(color: Colors.black),
                 ),
               ),
             ),
-          )
+          ),
         ],
         title: const Text(
           "Activities",
@@ -86,7 +87,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
-                      "Description : this project related to water scheme, a very heavy project , this project cost estimation up to 7 M",
+                      "Description : ",
                       style: TextStyle(fontFamily: 'poppins'),
                     )),
                 Padding(
@@ -106,251 +107,314 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                     child: Container(
                       height: 210,
                       child: ListView.builder(
-                          itemCount: Overseer.myteamList.length,
+                          itemCount: Overseer.teamActivityAssigned.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (ctx, index) {
+                           print("---------------- value is");
+                            print(Overseer.teamActivityAssigned[Overseer.myteamList[index].id.toString()+"-"+Overseer.projectId.toString()+"-"+Overseer.myteamList[index].fName + " " +
+                               Overseer.myteamList[index].lName]);
 
+                            print("activity is ${Overseer.myActiveActicity}");
 
-                            return InkWell(
-                              onTap: () {
-                                tabbedIndex = index;
-                                setState(() {});
-                                print("index of tab is $index");
-                                showModalBottomSheet<void>(
-                                  // context and builder are
-                                  // required properties in this widget
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    // we set up a container inside which
-                                    // we create center column and display text
-                                    return Container(
-                                      height: 250,
-                                      color: Colors.white,
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              height: 2,
-                                            ),
-                                            InkWell(
-                                                onTap: () {
-                                                  logActivity( context,"Work Finished","${Overseer.myteamList[index].fName +" "+Overseer.myteamList[index].lName}" ," has stoped work for ${Overseer.myActiveActicity} ");
+                            if(Overseer.teamActivityAssigned[Overseer.myteamList[index].id.toString()+"-"+Overseer.projectId.toString()+"-"+Overseer.myteamList[index].fName + " " +
+                                Overseer.myteamList[index].lName] != Overseer.myActiveActicity) {
+                              return Text("");
+                            } else {
+                              return InkWell(
+                                onTap: () {
+                                  tabbedIndex = index;
+                                  setState(() {});
+                                  print("index of tab is $index");
+                                  showModalBottomSheet<void>(
+                                    // context and builder are
+                                    // required properties in this widget
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      // we set up a container inside which
+                                      // we create center column and display text
+                                      return Container(
+                                        height: 250,
+                                        color: Colors.white,
+                                        child: Center(
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .center,
+                                            children: <Widget>[
+                                              SizedBox(
+                                                height: 2,
+                                              ),
+                                              InkWell(
+                                                  onTap: () {
+                                                    logActivity(context,
+                                                        Overseer.logKeys[18],
+                                                        "${Overseer
+                                                            .myteamList[index]
+                                                            .fName + " " +
+                                                            Overseer
+                                                                .myteamList[index]
+                                                                .lName}",
+                                                        " has stoped work for ${Overseer
+                                                            .myActiveActicity} ");
 
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Align(
-                                                    alignment: Alignment.bottomCenter,
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 20,
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Align(
+                                                      alignment: Alignment
+                                                          .bottomCenter,
+                                                      child: Padding(
+                                                        padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 20,
 
+                                                            vertical: 10),
+                                                        child: Container(
+                                                          width: MediaQuery
+                                                              .of(
+                                                              context)
+                                                              .size
+                                                              .width,
+                                                          padding: EdgeInsets
+                                                              .symmetric(
                                                               vertical: 10),
-                                                      child: Container(
-                                                        width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                vertical: 10),
-                                                        decoration: BoxDecoration(
-                                                            color: Color(
-                                                                0xffeb5f30),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10))),
-                                                        child: Center(
-                                                            child: Text(
-                                                          'work Stopped',
-                                                          style: TextStyle(
-                                                              fontSize: 20,
-                                                              color:
-                                                                  Colors.white,
-                                                              letterSpacing: 1,
-                                                              fontFamily:
-                                                                  'Poppins'),
-                                                        )),
-                                                      ),
-                                                    ))),
-                                            SizedBox(
-                                              height: 2,
-                                            ),
-                                            InkWell(
-                                                onTap: () {
-                                                  logActivity( context,"Work Finished","${Overseer.myteamList[index].fName +" "+Overseer.myteamList[index].lName}" ," has stoped work for ${Overseer.myActiveActicity} ");
+                                                          decoration: BoxDecoration(
+                                                              color: Color(
+                                                                  0xffeb5f30),
+                                                              borderRadius:
+                                                              BorderRadius
+                                                                  .all(Radius
+                                                                  .circular(
+                                                                  10))),
+                                                          child: Center(
+                                                              child: Text(
+                                                                'work Stopped',
+                                                                style: TextStyle(
+                                                                    fontSize: 20,
+                                                                    color:
+                                                                    Colors
+                                                                        .white,
+                                                                    letterSpacing: 1,
+                                                                    fontFamily:
+                                                                    'Poppins'),
+                                                              )),
+                                                        ),
+                                                      ))),
+                                              SizedBox(
+                                                height: 2,
+                                              ),
+                                              InkWell(
+                                                  onTap: () {
+                                                    logActivity(context,
+                                                        Overseer.logKeys[17],
+                                                        "${Overseer
+                                                            .myteamList[index]
+                                                            .fName + " " +
+                                                            Overseer
+                                                                .myteamList[index]
+                                                                .lName}",
+                                                        " has stoped work for ${Overseer
+                                                            .myActiveActicity} ");
 
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Align(
-                                                    alignment:
-                                                        Alignment.bottomCenter,
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 20,
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Align(
+                                                      alignment:
+                                                      Alignment.bottomCenter,
+                                                      child: Padding(
+                                                        padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 20,
+                                                            vertical: 10),
+                                                        child: Container(
+                                                          width: MediaQuery
+                                                              .of(
+                                                              context)
+                                                              .size
+                                                              .width,
+                                                          padding: EdgeInsets
+                                                              .symmetric(
                                                               vertical: 10),
-                                                      child: Container(
-                                                        width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                vertical: 10),
-                                                        decoration: BoxDecoration(
-                                                            color: Color(
-                                                                0xffeb5f30),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10))),
-                                                        child: Center(
-                                                            child: Text(
-                                                          'Work Finished',
-                                                          style: TextStyle(
-                                                              fontSize: 20,
-                                                              color:
-                                                                  Colors.white,
-                                                              letterSpacing: 1,
-                                                              fontFamily:
-                                                                  'Poppins'),
-                                                        )),
-                                                      ),
-                                                    ))),
-                                            SizedBox(
-                                              height: 2,
-                                            ),
-                                            InkWell(
-                                                onTap: () {
-                                                  logActivity( context,"Work Finished","${Overseer.myteamList[index].fName +" "+Overseer.myteamList[index].lName}" ," has finished work for ${Overseer.myActiveActicity} ");
+                                                          decoration: BoxDecoration(
+                                                              color: Color(
+                                                                  0xffeb5f30),
+                                                              borderRadius:
+                                                              BorderRadius
+                                                                  .all(Radius
+                                                                  .circular(
+                                                                  10))),
+                                                          child: Center(
+                                                              child: Text(
+                                                                'Work Finished',
+                                                                style: TextStyle(
+                                                                    fontSize: 20,
+                                                                    color:
+                                                                    Colors
+                                                                        .white,
+                                                                    letterSpacing: 1,
+                                                                    fontFamily:
+                                                                    'Poppins'),
+                                                              )),
+                                                        ),
+                                                      ))),
+                                              SizedBox(
+                                                height: 2,
+                                              ),
+                                              InkWell(
+                                                  onTap: () {
 
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Align(
-                                                    alignment:
-                                                        Alignment.bottomCenter,
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 20,
+                                                    print("-- to be removed ");
+                                                    print(Overseer.myteamList[tabbedIndex].id.toString()+"-"+Overseer.projectId.toString()+"-"+Overseer.myteamList[tabbedIndex].fName + " " +
+                                                        Overseer.myteamList[tabbedIndex].lName);
+                                                    Overseer.teamActivityAssigned[Overseer.myteamList[tabbedIndex].id.toString()+"-"+Overseer.projectId.toString()+"-"+Overseer.myteamList[tabbedIndex].fName + " " +
+                                                        Overseer.myteamList[tabbedIndex].lName] = "-";
+
+                                                    print("yes i am here");
+                                                    logActivity(context,
+                                                        Overseer.logKeys[17],
+                                                        "${Overseer
+                                                            .myteamList[index]
+                                                            .fName + " " +
+                                                            Overseer
+                                                                .myteamList[index]
+                                                                .lName}",
+                                                        " has finished work for ${Overseer
+                                                            .myActiveActicity} ");
+
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Align(
+                                                      alignment:
+                                                      Alignment.bottomCenter,
+                                                      child: Padding(
+                                                        padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 20,
+                                                            vertical: 10),
+                                                        child: Container(
+                                                          width: MediaQuery
+                                                              .of(
+                                                              context)
+                                                              .size
+                                                              .width,
+                                                          padding: EdgeInsets
+                                                              .symmetric(
                                                               vertical: 10),
-                                                      child: Container(
-                                                        width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                vertical: 10),
-                                                        decoration: BoxDecoration(
-                                                            color: Color(
-                                                                0xffeb5f30),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10))),
-                                                        child: Center(
-                                                            child: Text(
-                                                          'Assign Other work',
-                                                          style: TextStyle(
-                                                              fontSize: 20,
-                                                              color:
-                                                                  Colors.white,
-                                                              letterSpacing: 1,
-                                                              fontFamily:
-                                                                  'Poppins'),
-                                                        )),
-                                                      ),
-                                                    ))),
-                                          ],
+                                                          decoration: BoxDecoration(
+                                                              color: Color(
+                                                                  0xffeb5f30),
+                                                              borderRadius:
+                                                              BorderRadius
+                                                                  .all(Radius
+                                                                  .circular(
+                                                                  10))),
+                                                          child: Center(
+                                                              child: Text(
+                                                                'Assign Other work',
+                                                                style: TextStyle(
+                                                                    fontSize: 20,
+                                                                    color:
+                                                                    Colors
+                                                                        .white,
+                                                                    letterSpacing: 1,
+                                                                    fontFamily:
+                                                                    'Poppins'),
+                                                              )),
+                                                        ),
+                                                      ))),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                              child: Card(
-                                  color: index == tabbedIndex
-                                      ? Colors.deepOrange
-                                      : Colors.white,
-                                  child: Column(
-                                      crossAxisAlignment:
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  height: 270,
+                                  width: 180,
+                                  child: Card(
+                                     elevation: 20.0,
+
+                                      color: index == tabbedIndex
+                                          ? Colors.deepOrange
+                                          : Colors.deepOrange.shade200,
+                                      child: Column(
+                                          crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                              right: 12, left: 12),
-                                          width: 120,
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: AssetImage(
-                                                    "assets/images/waleed.jpeg",
-                                                  ),
-                                                  fit: BoxFit.cover)),
-                                          child: Text(""),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Padding(
-                                          padding:
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  right: 12, left: 12),
+                                              width: 120,
+                                              height: 100,
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                        "assets/images/waleed.jpeg",
+                                                      ),
+                                                      fit: BoxFit.cover)),
+                                              child: Text(""),
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Padding(
+                                              padding:
                                               const EdgeInsets.only(left: 8.0),
-                                          child: Text(
-                                           Overseer.myteamList[index].fName +" "+Overseer.myteamList[index].lName,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                letterSpacing: 1),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 8.0),
-                                          child: Text(
-                                            Overseer.myteamList[index].roleId
-                                                .contains("5") ? "Worker" : "Supervisor",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w800,
-                                                letterSpacing: 1),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.only(left: 10),
-                                          child: Container(
-                                            //padding: EdgeInsets.only(left: 30),
-                                            height: Get.height * 0.045,
-                                            width: Get.width * 0.30,
-                                            decoration: BoxDecoration(
-                                                color: Colors.green,
-                                                borderRadius:
-                                                    BorderRadius.circular(15)),
-                                            child: Center(
-                                              child: TextButton(
-                                                onPressed: () {
-                                                  // Get.to(
-                                                  //     ActivityDetailScreen());
-                                                },
-                                                child: Text(
-                                                  "working",
-                                                  style: TextStyle(
-                                                      color: Colors.black),
-                                                ),
+                                              child: Text(
+                                                Overseer.myteamList[index].fName +
+                                                    " " +
+                                                    Overseer.myteamList[index]
+                                                        .lName,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    letterSpacing: 1),
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                      ])),
-                              //),
-                            );
+                                            Padding(
+                                              padding:
+                                              const EdgeInsets.only(left: 8.0),
+                                              child: Text(
+                                                Overseer.myteamList[index].roleId
+                                                    .contains("5")
+                                                    ? "Worker"
+                                                    : "Supervisor",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w800,
+                                                    letterSpacing: 1),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            // Container(
+                                            //   padding: EdgeInsets.only(left: 10),
+                                            //   child: Container(
+                                            //     //padding: EdgeInsets.only(left: 30),
+                                            //     height: Get.height * 0.045,
+                                            //     width: Get.width * 0.30,
+                                            //     decoration: BoxDecoration(
+                                            //         color: Colors.green,
+                                            //         borderRadius:
+                                            //         BorderRadius.circular(15)),
+                                            //     child: Center(
+                                            //       child: TextButton(
+                                            //         onPressed: () {
+                                            //           // Get.to(
+                                            //           //     ActivityDetailScreen());
+                                            //         },
+                                            //         child: Text(
+                                            //           "working",
+                                            //           style: TextStyle(
+                                            //               color: Colors.black),
+                                            //         ),
+                                            //       ),
+                                            //     ),
+                                            //   ),
+                                            // ),
+                                          ])),
+                                ),
+                                //),
+                              );
+                            } // else of top If
                           }),
                     )),
                 SizedBox(
@@ -359,7 +423,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
-                      "Time Expected : ",
+                      " ",
                       style: TextStyle(
                           fontFamily: 'poppins',
                           fontWeight: FontWeight.w800,
@@ -371,7 +435,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
-                      "Start Time : ",
+                      " ",
                       style: TextStyle(
                           fontFamily: 'poppins',
                           fontWeight: FontWeight.w800,
@@ -383,7 +447,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
-                      "End Time : ",
+                      " ",
                       style: TextStyle(
                           fontFamily: 'poppins',
                           fontWeight: FontWeight.w800,
@@ -423,7 +487,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
     LogsManager logger = Provider.of(context).fetch(
         LogsManager);
 
-    logger.inLogType.add("team_project_rolecall");
+    logger.inLogType.add(type);
     // adding title and description
     logger.inLogTitle.add(" ${type}: \" ${title} \"  \" ${activityName} \" .");
     logger.inLogDescription.add("type.");
@@ -434,6 +498,8 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
 
     logger.inLogActor2.add("");
     logger.inLogActor2Id.add(0);
+
+    logger.inQuantity.add("");
 
     // adding value for Item1
     logger.inLogItem1.add("");

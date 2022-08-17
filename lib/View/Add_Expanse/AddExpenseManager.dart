@@ -14,14 +14,14 @@ class AddExpenseManager with Myvalidation {
 
   final title = BehaviorSubject<String>();
   final reason = BehaviorSubject<String>();
-  final cost = BehaviorSubject<int>();
+  final cost = BehaviorSubject<String>();
   final details = BehaviorSubject<String>();
 
   Stream<String> get title$ => title.stream.transform(passwordLength);
   Sink<String> get inTitle => title.sink;
 
-  Stream<int> get cost$ => cost.stream.transform(validCost);
-  Sink<int> get inCost => cost.sink;
+  Stream<String> get cost$ => cost.stream.transform(validCost);
+  Sink<String> get inCost => cost.sink;
   
   Stream<String> get reason$ => reason.stream.transform(passwordLength);
   Sink<String> get inReason => reason.sink;

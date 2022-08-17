@@ -6,7 +6,6 @@ mixin Myvalidation {
 
   static bool isPasswordValidLength(String password) => password.length >= 4;
 
-  static bool isCostValid(String cost) => cost.isNotEmpty;
   final validateEmail =
       StreamTransformer<String, String>.fromHandlers(handleData: (value, sink) {
     if (isEmail(value)) {
@@ -29,16 +28,4 @@ mixin Myvalidation {
       sink.addError("Password must be of 4 characters");
     }
   });
-
-  final validCost =
-  StreamTransformer<String, String>.fromHandlers(handleData: (value, sink) {
-    if (isCostValid(value)) {
-      sink.add(value);
-    } else {
-      print("password error text > $value");
-      sink.add(value);
-      sink.addError("cost must be greater than 0 ");
-    }
-  });
-
 }

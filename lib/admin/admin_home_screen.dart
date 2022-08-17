@@ -7,23 +7,28 @@ import 'package:proof_tech_app/View/Add_Action/add_action.dart';
 import 'package:proof_tech_app/View/Add_Expanse/add_expanse_screen.dart';
 import 'package:proof_tech_app/View/Project/project_screen.dart';
 import 'package:proof_tech_app/View/Team/team.dart';
+import 'package:proof_tech_app/View/logs/logsview.dart';
 import 'package:proof_tech_app/View/material/material_project.dart';
 import 'package:proof_tech_app/View/tool/tool_project.dart';
+import 'package:proof_tech_app/admin/admin_project_screen.dart';
+import 'package:proof_tech_app/admin/logsview.dart';
+import 'package:proof_tech_app/admin/tools_stock.dart';
+import 'package:proof_tech_app/admin/material_stock.dart';
 //import 'package:flutter/tool';
-import '../logs/logsview.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+
+class AdminHomeScreen extends StatefulWidget {
+  const AdminHomeScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _AdminHomeScreenState createState() => _AdminHomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _AdminHomeScreenState extends State<AdminHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -52,10 +57,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
             title: const Text("Proof Tech" ,style: TextStyle(fontSize: 18,
                 fontWeight: FontWeight.bold ,color: Colors.deepOrange),),
-            bottom: PreferredSize(
-                child: Text(Overseer.userName,
-                    style: TextStyle(color: Colors.yellow)),
-                preferredSize: Size.zero),
+            // bottom: PreferredSize(
+            //     child: Text("Select Project",
+            //         style: TextStyle(color: Colors.yellow)),
+            //     preferredSize: Size.zero),
           ),
 
 
@@ -85,10 +90,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Center(
                           child: TextButton(
                             onPressed: () {
-                              Get.to(ProjectScreen());
+                              Get.to(AdminProjectScreen());
                             },
                             child: Text(
-                              Overseer.projectName,
+                              Overseer.myAdminProjectName,
                               style: TextStyle(color: Colors.black),
                             ),
                           ),
@@ -117,13 +122,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   tabs: [
                     Tab(
                       child: Text(
-                        "Activities",
+                        "Logs",
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
                     Tab(
                       child:
-                          Text("Logs", style: TextStyle(color: Colors.black)),
+                      Text("Material", style: TextStyle(color: Colors.black)),
+                    ),
+                    Tab(
+                      child:
+                          Text("Tools", style: TextStyle(color: Colors.black)),
                     ),
                   ],
                   // isScrollable: true,
@@ -136,70 +145,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.white,
 
                   child: TabBarView(children: [
-                    SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          tabContainer(
-                            title: "Team",
-                            ontap: () {
-                              Get.to(TeamScreen());
-                            },
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          tabContainer(
-                            title: "Activities",
-                            ontap: () {
-                              Get.to(ActivitiesScreen());
-                            },
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          tabContainer(
-                            title: "Material",
-                            ontap: () {
-                              Get.to(MaterialsProject(title: "Project Material"));
-                            },
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          tabContainer(
-                            title: "Tools",
-                            ontap: () {
-                              Get.to(ToolsProject(title: "Project Tools"));
-                            },
-                          ),
-
-                          SizedBox(
-                            height: 10,
-                          ),
-                          tabContainer(
-                            title: "Add Action",
-                            ontap: () {
-                              Get.to(Add_Action_Screen());
-                            },
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          tabContainer(
-                            title: "Add Extra Expenses",
-                            ontap: () {
-                              Get.to(AddExpanseScreen());
-                            },
-                          ),
-
-                        ],
-                      ),
-                    ),
+                    // 1st Tabbar View
+                    LogsView(title: "Project Logs",)
+                    ,
                     // 2nd tabbar view view
-                    logsview(title: "Project Logs",),
+                    AdminMaterialsStock(title: "Materials Stock"),
+
+                    //3rd Tabbar View
+                    AdminToolsStock(title: "Tools Stock"),
                   ]),
                 )
               ],

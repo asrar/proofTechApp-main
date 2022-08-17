@@ -95,7 +95,7 @@ class _Add_Action_ScreenState extends State<Add_Action_Screen> {
                       errortext: snapshot.error == null
                           ? ""
                           : snapshot.error.toString(),
-                      textFieldText: 'xyz@gmail.com',
+                      textFieldText: 'Title',
                       passwordTxt: false
                   );
                 }
@@ -184,7 +184,7 @@ class _Add_Action_ScreenState extends State<Add_Action_Screen> {
                               LogsManager logger = Provider.of(context).fetch(
                                   LogsManager);
 
-                              logger.inLogType.add("team_project_rolecall");
+                              logger.inLogType.add(Overseer.logKeys[24]);
                               // adding title and description
                               logger.inLogTitle.add(" Added Action for \" ${manager.title.value} \" For Reason \" ${manager.reason.value} \" "
                                    " Details \" ${manager.details.value} \"  ");
@@ -196,6 +196,8 @@ class _Add_Action_ScreenState extends State<Add_Action_Screen> {
 
                               logger.inLogActor2.add("");
                               logger.inLogActor2Id.add(0);
+
+                              logger.inQuantity.add("");
 
                               // adding value for Item1
                               logger.inLogItem1.add("");

@@ -15,9 +15,20 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:proof_tech_app/helper/notification_helper.dart';
 
 
+enum Size {
+  small,
+  medium,
+  large
+}
 
-
+enum BorderType {
+  start,
+  middle,
+  end,
+  theend
+}
 Future<void> main() async {
+
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
  // await Firebase.initializeApp();
