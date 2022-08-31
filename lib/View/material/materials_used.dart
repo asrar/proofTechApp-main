@@ -9,6 +9,7 @@ import '../../logs/LogsManager.dart';
 import '../../widgets/custom_textField.dart';
 import '../../widgets/custom_textField.dart';
 import '../home/home_screen.dart';
+import 'material_project.dart';
 
 class MaterialsUsed extends StatefulWidget {
   const MaterialsUsed({Key? key}) : super(key: key);
@@ -52,17 +53,17 @@ class _MaterialsUsedState extends State<MaterialsUsed> {
           style: TextStyle(fontFamily: 'poppins'),
         ),
         iconTheme: const IconThemeData(color: Colors.white),
-        leading: Column(
+         leading: InkWell(
+          onTap: (){
+    Get.offAll(MaterialsProject(title: "Materials",));
+    },
+      child: Column(
           children: [
-            SizedBox(
-              height: Get.height * 0.025,
-            ),
-            const Text(
-              "",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
+
+            Padding(padding: EdgeInsets.only(top: 10),
+                child:  Icon(Icons.arrow_back, color: Colors.white)) ,
+          ]),
+    ),
       ),
       body: SingleChildScrollView(
         child: Container(

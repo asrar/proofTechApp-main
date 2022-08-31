@@ -280,7 +280,7 @@ class AdminTools {
   late final String status;
   late final String createdAt;
   late final String updatedAt;
-  late final String? availableStock;
+  String? availableStock;
   late final Unit unit;
   late final AdminToolType admintooltype;
 

@@ -227,13 +227,13 @@ class Stock {
   late final String receivedFrom;
   late final String receivedTo;
   late final String quantity;
-  late final String packageQuantity;
+  String? packageQuantity;
   late final String unitPackageId;
   late final String? unit;
   late final String notes;
   late final String createdAt;
   late final String updatedAt;
-  late final Unitpacakge unitpacakge;
+   Unitpacakge? unitpacakge;
 
   Stock.fromJson(Map<String, dynamic> json){
     print("Starting Stock parsing ");
@@ -400,10 +400,11 @@ class Team {
   late final String memberAddingTime;
 
   Team.fromJson(Map<String, dynamic> json){
-    print("--starting team parsing ");
+    print("--starting team parsing >>> ");
     id = json['id'];
     fName = json['f_name'];
     lName = json['l_name'];
+    print("-- team name are ${fName} - ${lName}");
     phone = json['phone'];
     email = json['email'];
     image = json['image'];

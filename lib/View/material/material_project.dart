@@ -34,9 +34,20 @@ class _MaterialsProjectState extends State<MaterialsProject> {
   Widget build(BuildContext context) {
     ListTile makeListTile(Materials material) {
       Overseer.activeMaterialQuantityAndUnit = "";
+
       for(int i=0; i<material.stock.length; i++){
+        String unitPackage = "";
+        String unitQuantity = "";
+
+        if(material.stock[i].unitpacakge != null){
+          unitPackage =  material.stock[i].unitpacakge!.title;
+        }
+        if(material.stock[i].packageQuantity != null){
+          unitQuantity = material.stock[i].packageQuantity!;
+          unitQuantity = unitQuantity.substring(1);
+        }
         Overseer.activeMaterialQuantityAndUnit = Overseer.activeMaterialQuantityAndUnit + "( "+
-            (material.stock[i].quantity).trim().substring(1)+"" +material.unitTitle  +" )";
+            (material.stock[i].quantity).trim().substring(1)+"" +material.unitTitle  +" :  ${unitQuantity}${unitPackage} )";
       }
       print("--quantity---- ${Overseer.activeMaterialQuantityAndUnit}");
       return  ListTile(
@@ -82,8 +93,18 @@ class _MaterialsProjectState extends State<MaterialsProject> {
           onTap: () {
             Overseer.activeMaterialQuantityAndUnit = "";
             for(int i=0; i<material.stock.length; i++){
+              String unitPackage = "";
+              String unitQuantity = "";
+
+              if(material.stock[i].unitpacakge != null){
+                unitPackage =  material.stock[i].unitpacakge!.title;
+              }
+              if(material.stock[i].packageQuantity != null){
+                unitQuantity = material.stock[i].packageQuantity!;
+                unitQuantity = unitQuantity.substring(1);
+              }
               Overseer.activeMaterialQuantityAndUnit = Overseer.activeMaterialQuantityAndUnit + "( "+
-                  (material.stock[i].quantity).trim().substring(1)+"" +material.unitTitle  +" )";
+                  (material.stock[i].quantity).trim().substring(1)+"" +material.unitTitle  +" :  ${unitQuantity}${unitPackage} )";
             }
 
             print("--quantity from cell---- ${Overseer.activeMaterialQuantityAndUnit}");
@@ -158,6 +179,8 @@ class _MaterialsProjectState extends State<MaterialsProject> {
             onPressed: () {},
           )
         ],
+
+
       );
 
       return Scaffold(

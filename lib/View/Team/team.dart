@@ -85,7 +85,7 @@ class _TeamScreenState extends State<TeamScreen> {
                     setState(() {});
                   },
                   child: Text(
-                    "Roll Call",
+                    "SET",
                     style: TextStyle(color: Colors.black),
                   ),
                 ),

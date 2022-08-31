@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:proof_tech_app/View/home/home_screen.dart';
 import 'package:proof_tech_app/model/project_model.dart';
 
 import '../../AppLayer/Overseer.dart';
@@ -107,6 +108,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
   //  Overseer.supervisorName = _userList[0].data.fName  +" "+ _userList[0].data.lName;
   //  Overseer.supervisorId = _userList[0].data.id;
     Overseer.projectName = Overseer.myProjects[selected_index].name;
+
     Overseer.projectId = Overseer.myProjects[selected_index].id;
     Overseer.myteamList = Overseer.myProjects[selected_index].team;
     Overseer.myMaterialList = Overseer.myProjects[selected_index].material;
@@ -114,9 +116,9 @@ class _ProjectScreenState extends State<ProjectScreen> {
     //Overseer.myProjects = Overseer..Projects1;
     Overseer.myActivities = Overseer.myProjects[selected_index].type.myActivities;
     Overseer.myProjectActicity = Overseer.myProjects[selected_index].type.name;
-   
 
-                    Navigator.pop(context);
+
+    Get.offAll(HomeScreen());
                   },
                   child: Align(
                       alignment: Alignment.bottomCenter,

@@ -32,6 +32,14 @@ class UserManager with Myvalidation {
     }
   }
 
+  Stream<bool> get loadProjectsData$ async* {
+    CombineLatestStream([email$, password$], (values) => true);
+    print("loading Data again ");
+
+      yield await UserService.loadData();
+
+  }
+
   Stream<bool> get isFormValid$ {
     if(_email.hasValue) {
       print("the real email is _${_email.value} ");

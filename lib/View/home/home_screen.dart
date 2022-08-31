@@ -9,7 +9,10 @@ import 'package:proof_tech_app/View/Project/project_screen.dart';
 import 'package:proof_tech_app/View/Team/team.dart';
 import 'package:proof_tech_app/View/material/material_project.dart';
 import 'package:proof_tech_app/View/tool/tool_project.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:flutter/tool';
+import '../../AppLayer/Provider.dart';
+import '../../Login/UserManager.dart';
 import '../logs/logsview.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,9 +22,24 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
+
+
+Future userLoggedIn(BuildContext context) async {
+
+
+
+}
+
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    if(Overseer.myProjects.length==0) {
+      print("----- At the moment project 0");
+      UserManager manager = Provider.of(context).fetch(UserManager);
+      manager.loadProjectsData$.listen((event) async {
+      print("print Data Loaded AKS");
+      });
+    }
     return DefaultTabController(
       length: 2,
       child: SafeArea(

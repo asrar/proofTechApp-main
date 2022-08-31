@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 //import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:proof_tech_app/Login/UserManager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../AppLayer/Overseer.dart';
 
@@ -142,6 +143,8 @@ class _SignInState extends State<SignIn> {
                           print("this is 3rd call after submit");
                           manager.isFormSubmit$.listen((event) async {
                             if (Overseer.is_user_valid) {
+                              SharedPreferences sharedP = await SharedPreferences.getInstance();
+                              sharedP.setString('username',"user-logged-true");
                               Get.snackbar(
                                 "Congratulation",
                                 "Successfully LogIn with Proof Tech App",
@@ -158,7 +161,9 @@ class _SignInState extends State<SignIn> {
                               print("-------- the real role is ${Overseer.roleId}");
                               if(Overseer.roleId.contains("1")) {
                                 GetMTStockManager adminManager = Provider.of(context).fetch(GetMTStockManager);
-                                adminManager.myList.listen((event) {
+                                adminManager.myList.listen((event) async {
+                                  SharedPreferences sharedP = await SharedPreferences.getInstance();
+                                  sharedP.setString('username',"user-logged-true");
                                   Get.offAll(AdminHomeScreen());
                                 });
 
@@ -174,6 +179,9 @@ class _SignInState extends State<SignIn> {
                               // print("${_sharedPreferences.getInt('userId')}");
 
                             } else if (snapshot.hasError) {
+                              SharedPreferences sharedP = await SharedPreferences.getInstance();
+                              sharedP.setString('username',"user-not-logged-true");
+                              print("Login Failed");
                               Get.snackbar(
                                 "Error",
                                 "Get some Error..",
