@@ -9,6 +9,7 @@ import 'package:proof_tech_app/model/logsmodel.dart';
 import 'package:proof_tech_app/View/logs/detail_page.dart';
 
 import '../../AppLayer/Overseer.dart';
+import '../home/home_screen.dart';
 
 
 
@@ -37,8 +38,14 @@ class _ToolsProjectState extends State<ToolsProject> {
     ListTile makeListTile(Tools tool) {
       Overseer.activeToolQuantityAndUnit = "";
       for(int i=0; i<tool.stock.length; i++){
-        Overseer.activeToolQuantityAndUnit = Overseer.activeToolQuantityAndUnit + "( "+
-            (tool.stock[i].quantity).trim().substring(1)+"" +tool.unitTitle  +" )";
+        if(tool.stock[i].quantity.trim().contains("-")){
+          Overseer.activeToolQuantityAndUnit = Overseer.activeToolQuantityAndUnit + "(Issued: "+
+              (tool.stock[i].quantity).trim().substring(1)+"" +tool.unitTitle  +")";
+        }else{
+          Overseer.activeToolQuantityAndUnit = Overseer.activeToolQuantityAndUnit + " [ Returned: "+
+              (tool.stock[i].quantity)+"" +tool.unitTitle  +" ]";
+        }
+
       }
       return  ListTile(
           contentPadding:
@@ -83,8 +90,14 @@ class _ToolsProjectState extends State<ToolsProject> {
           onTap: () {
             Overseer.activeToolQuantityAndUnit = "";
             for(int i=0; i<tool.stock.length; i++){
-              Overseer.activeToolQuantityAndUnit = Overseer.activeToolQuantityAndUnit + "( "+
-                  (tool.stock[i].quantity).trim().substring(1)+"" +tool.unitTitle  +" )";
+              if(tool.stock[i].quantity.trim().contains("-")){
+                Overseer.activeToolQuantityAndUnit = Overseer.activeToolQuantityAndUnit + "(Issued: "+
+                    (tool.stock[i].quantity).trim().substring(1)+"" +tool.unitTitle  +")";
+              }else{
+
+                Overseer.activeToolQuantityAndUnit = Overseer.activeToolQuantityAndUnit + "[ Returned: "+
+                    (tool.stock[i].quantity)+"" +tool.unitTitle  +" ]";
+              }
             }
 
             Overseer.activeTool = tool.name;
@@ -153,8 +166,10 @@ class _ToolsProjectState extends State<ToolsProject> {
         title: Text(widget.title),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.list),
-            onPressed: () {},
+            icon: Icon(Icons.close),
+            onPressed: () {
+              Get.offAll(HomeScreen());
+            },
           )
         ],
       );

@@ -35,6 +35,8 @@ class LogsService {
 
       return true;
     }else{
+      print("--- error status code ${response.statusCode}");
+      print("RESPONSE: ${response.body}");
       return false;
     }
 

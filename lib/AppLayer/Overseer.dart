@@ -14,6 +14,8 @@ import 'package:proof_tech_app/admin/GetMTStockModel.dart';
 
 
 class Overseer {
+
+  // Generics
   Map<dynamic, dynamic> repository = {};
 
   ///

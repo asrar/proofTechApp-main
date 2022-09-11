@@ -238,6 +238,7 @@ class Stock {
   Stock.fromJson(Map<String, dynamic> json){
     print("Starting Stock parsing ");
     id = json['id'];
+
     if(json['materials_id'] != null ) {
       materialsId = json['materials_id'];
     }else if(json['tools_id'] != null){
@@ -254,7 +255,7 @@ class Stock {
 
 
     quantity = json['quantity'];
-    print("-- before quantity");
+    print("-- before quantity >> ${json['package_quantity']}");
     if(json['package_quantity']!=null) {
       packageQuantity = json['package_quantity'];
     }
@@ -280,6 +281,7 @@ class Stock {
     }
     print("End Stock parsing ");
     print(" just before unit - inside stock");
+    print("the real unitpackage is ${json['unitpacakge']} ");
     if(json['unitpacakge']!=null) {
       unitpacakge = Unitpacakge.fromJson(json['unitpacakge']);
       print("end unit - inside stock");

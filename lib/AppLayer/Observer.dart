@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// generics class
 class Observer<T> extends StatelessWidget {
   @required
   final Stream<T> stream;

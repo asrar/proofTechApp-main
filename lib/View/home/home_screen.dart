@@ -33,6 +33,7 @@ Future userLoggedIn(BuildContext context) async {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    print("---- projects length in data is >>> ${Overseer.myProjects.length}");
     if(Overseer.myProjects.length==0) {
       print("----- At the moment project 0");
       UserManager manager = Provider.of(context).fetch(UserManager);

@@ -227,6 +227,7 @@ class _TeamScreenState extends State<TeamScreen> {
                                                                       false;
                                                                   if (snapshot
                                                                       .hasData) {
+                                                                    print("--- adding role call is this ");
                                                                     // adding Type
                                                                     manager.inLogType.add(Overseer.logKeys[15]);
                                                                     // adding title and description

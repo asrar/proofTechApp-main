@@ -79,7 +79,7 @@ class _MaterialsUsedState extends State<MaterialsUsed> {
                       Overseer.activeMaterial,
                       style: TextStyle(
                           color: Colors.black,
-                          fontWeight: FontWeight.normal,
+                          fontWeight: FontWeight.bold,
                           fontFamily: 'poppins',
                           fontSize: 25),
                     ),
@@ -93,7 +93,7 @@ class _MaterialsUsedState extends State<MaterialsUsed> {
                 color: Colors.black,
                 fontWeight: FontWeight.normal,
                 fontFamily: 'poppins',
-                fontSize: 25),
+                fontSize: 20),
           ),
               SizedBox(
                 height: 20,

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:proof_tech_app/Login/LoginModel.dart';
+import 'package:proof_tech_app/View/home/home_screen.dart';
 import 'package:proof_tech_app/View/material/material_count_grid.dart';
 import 'package:proof_tech_app/View/material/materials_used.dart';
 import 'package:proof_tech_app/model/logsmodel.dart';
@@ -44,10 +45,26 @@ class _MaterialsProjectState extends State<MaterialsProject> {
         }
         if(material.stock[i].packageQuantity != null){
           unitQuantity = material.stock[i].packageQuantity!;
-          unitQuantity = unitQuantity.substring(1);
+          if(material.stock[i].quantity.trim().contains("-"))
+          {
+            unitQuantity = unitQuantity.substring(1);
+          }else{
+            print("getting returned unit quantity");
+           // unitQuantity = material.stock[i].unitQuantity;
+          }
+
         }
-        Overseer.activeMaterialQuantityAndUnit = Overseer.activeMaterialQuantityAndUnit + "( "+
-            (material.stock[i].quantity).trim().substring(1)+"" +material.unitTitle  +" :  ${unitQuantity}${unitPackage} )";
+        if(material.stock[i].quantity.trim().contains("-")) {
+          Overseer.activeMaterialQuantityAndUnit =
+              Overseer.activeMaterialQuantityAndUnit + " " +
+                  (material.stock[i].quantity).trim().substring(1) + "" +
+                  material.unitTitle + " :  ${unitQuantity}${unitPackage} ";
+        }else{
+          Overseer.activeMaterialQuantityAndUnit =
+              Overseer.activeMaterialQuantityAndUnit + "[ Returned: " +
+                  (material.stock[i].quantity).trim()+ "" +
+                  material.unitTitle + " :  ${unitQuantity}${unitPackage} ]";
+        }
       }
       print("--quantity---- ${Overseer.activeMaterialQuantityAndUnit}");
       return  ListTile(
@@ -101,11 +118,25 @@ class _MaterialsProjectState extends State<MaterialsProject> {
               }
               if(material.stock[i].packageQuantity != null){
                 unitQuantity = material.stock[i].packageQuantity!;
-                unitQuantity = unitQuantity.substring(1);
+                if(material.stock[i].quantity.trim().contains("-")){
+                  unitQuantity = unitQuantity.substring(1);
+                }else
+                {
+              //    unitQuantity = material.stock[i].unit!;
+                }
+
               }
-              Overseer.activeMaterialQuantityAndUnit = Overseer.activeMaterialQuantityAndUnit + "( "+
-                  (material.stock[i].quantity).trim().substring(1)+"" +material.unitTitle  +" :  ${unitQuantity}${unitPackage} )";
-            }
+              if(material.stock[i].quantity.trim().contains("-")) {
+                Overseer.activeMaterialQuantityAndUnit =
+                    Overseer.activeMaterialQuantityAndUnit + " *" +
+                        (material.stock[i].quantity).trim().substring(1) + "" +
+                        material.unitTitle + " :  ${unitQuantity}${unitPackage}";
+              }else{
+                Overseer.activeMaterialQuantityAndUnit =
+                    Overseer.activeMaterialQuantityAndUnit + " *[Returned: " +
+                        (material.stock[i].quantity).trim()+ "" +
+                        material.unitTitle + " :  ${unitQuantity}${unitPackage}]";
+              }            }
 
             print("--quantity from cell---- ${Overseer.activeMaterialQuantityAndUnit}");
 
@@ -175,8 +206,10 @@ class _MaterialsProjectState extends State<MaterialsProject> {
         title: Text(widget.title),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.list),
-            onPressed: () {},
+            icon: Icon(Icons.close),
+            onPressed: () {
+             Get.offAll(HomeScreen());
+            },
           )
         ],
 

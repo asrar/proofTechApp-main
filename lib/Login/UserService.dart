@@ -46,7 +46,8 @@ class UserService {
     print("-- AUTH SERVICE BROWSE METHOD 1.2");
     http.Response response;
     String _url = "";
-    if (query != null && query.isNotEmpty) {       _url = 'https://s3bits.com/rooftech/api/v1/auth/supervisor/login?${query}';
+    if (query != null && query.isNotEmpty) {
+      _url = 'https://s3bits.com/rooftech/api/v1/auth/supervisor/login?${query}';
       print("// final USER URL   hhh  >>>" + _url);
       response = await http.post(Uri.parse(_url), headers: {
         'Access-Control-Allow-Origin': '*',
@@ -134,7 +135,7 @@ class UserService {
             List collection = json.decode(arr);
             SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
             await sharedPreferences.setString('Login-query', query);
-            print("user login parsing start");
+            print("setting login query in sp ... ${query}");
             List<LoginModel> _userList =
             collection.map((json) => LoginModel.fromJson(json)).toList();
             print("user login parisng end");
